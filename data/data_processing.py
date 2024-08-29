@@ -1,15 +1,16 @@
 from datetime import datetime
 import json
+import os
 import pandas as pd
 
 class DataProcess:
-    def __init__(self, author: str, path: str):
+    def __init__(self, author: str):
         self.my_data = {
             "author": author,
-            "date": datetime.now().date().isoformat()
+            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
         }
         
-        self.file = pd.read_csv(f"{path}/receitas.csv", delimiter=";")
+        self.file = pd.read_csv(f"{os.getcwd()}/csv/receitas.csv", delimiter=";")
 
     def get_json(self, log: bool = False) -> str:
         """
@@ -23,7 +24,7 @@ class DataProcess:
         json_data = self.file.to_json(orient='records')
         
         if log:
-            with open("logs/data.json", 'w', encoding='utf-8') as f:
+            with open("output/data.json", 'w', encoding='utf-8') as f:
                 json.dump(json.loads(json_data), f, ensure_ascii=False, indent=4)
 
         return json_data
@@ -39,7 +40,7 @@ class DataProcess:
         self.my_data["data"] = json.loads(data)
         
         if log:
-            with open('logs/output.json', 'w', encoding='utf-8') as f:
+            with open('output/output.json', 'w', encoding='utf-8') as f:
                 json.dump(self.my_data, f, ensure_ascii=False, indent=4)
 
         return self.my_data

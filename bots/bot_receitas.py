@@ -12,17 +12,17 @@ class RevenueBot:
     Bot para baixar os dados de receitas do Portal da Transparência.
     """
 
-    def __init__(self, web_url: str, path: str, download_time: int):
+    def __init__(self, web_url: str, download_time: int):
+        self.donwload_folder = os.getcwd() + "/csv"
+        self.url = web_url
+        self.download_wait_time = download_time
+        
         chrome_options = ChromeOptions()
-        prefs = {'download.default_directory': path}
+        prefs = {'download.default_directory': self.donwload_folder}
         chrome_options.add_experimental_option('prefs', prefs)
 
         self.driver = Chrome(options=chrome_options)
-        self.url = web_url
-        self.download_wait_time = download_time
-        self.donwload_folder = path
-        
-        self.clear_folder(self.donwload_folder)
+        self.clear_folder()
 
     @staticmethod
     def get_status(web_url: str):
@@ -41,13 +41,13 @@ class RevenueBot:
         except requests.exceptions.RequestException as e:
             return f"A página está offline. Erro: {e}"
 
-    def clear_folder(self, path: str):
+    def clear_folder(self):
         """
         Limpa a pasta de downloads se ela não estiver vazia.
         """
-        if len(os.listdir(path)) > 0:
-            for file in os.listdir(path):
-                os.remove(os.path.join(path, file))
+        if len(os.listdir(self.donwload_folder)) > 0:
+            for file in os.listdir(self.donwload_folder):
+                os.remove(os.path.join(self.donwload_folder, file))
                 
     def start(self):
         """
