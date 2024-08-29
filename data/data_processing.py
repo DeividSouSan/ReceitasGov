@@ -9,18 +9,23 @@ class DataProcess:
     """
     Processa e manipula os dados do DataFrame e salva em arquivos JSON.
     """
+
     def __init__(self, author: str):
-        self.author = author
-        
+
+        self.output = {
+            "author": author,
+            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+        }
+
         base_path = os.getcwd()
-        self.dataframe = pd.read_csv(f"{base_path}/csv/receitas.csv", delimiter=";")
+        self.dataframe = pd.read_csv(
+            f"{base_path}/csv/receitas.csv", delimiter=";")
 
         if os.path.exists("output"):
             logging.info(f"Diretório output já existe.")
         else:
             os.mkdir("output")
             logging.info(f"Diretório output foi criado.")
-            
 
     def handle_data(self, columns: list) -> any:
         """
@@ -37,7 +42,8 @@ class DataProcess:
             json_data = self.dataframe.to_json(orient='records')
 
         with open("output/data.json", 'w', encoding='utf-8') as file:
-            json.dump(json.loads(json_data), file, ensure_ascii=False, indent=4)
+            json.dump(json.loads(json_data), file,
+                      ensure_ascii=False, indent=4)
 
         logging.info(f"Dataframe convertido para JSON com sucesso.")
         return json_data
@@ -51,14 +57,10 @@ class DataProcess:
             data (str): JSON com os dados.
         """
 
-        output = {
-            "author": self.author,
-            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
-            "data": json.loads(data)
-            }
+        self.output["data"] = json.loads(data)
 
         with open('output/output.json', 'w', encoding='utf-8') as file:
-            json.dump(output, file, ensure_ascii=False, indent=4)
-            
+            json.dump(self.output, file, ensure_ascii=False, indent=4)
+
         logging.info(f"Dados de saída salvos com sucesso.")
-        return output
+        return self.output
