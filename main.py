@@ -15,19 +15,16 @@ print(path)
 
 
 def run_bot():
-    bot = RevenueBot(config["Download"]["WEBSITE_URL"], 
-                      config["Download"]["DOWNLOAD_FOLDER_PATH"], 
+    bot = RevenueBot(config["Download"]["WEBSITE_URL"],
                       int(config["Download"]["DOWNLOAD_TIME"]))
     bot.start()
 
-    data = DataProcess(config["Author"]["AUTHOR"],
-                       config["Download"]["DOWNLOAD_FOLDER_PATH"])
+    data = DataProcess(config["Author"]["AUTHOR"])
     
     data_json = data.get_json(log=True)
     data.process(data_json, log=True)
 
-    send_post_request(config["API"]["API_URL"],
-         config["Output"]["OUTPUT_PATH"])
+    send_post_request(config["API"]["API_URL"])
 
 
 def open_file():
