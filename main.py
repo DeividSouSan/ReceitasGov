@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
 from data.data_processing import DataProcess
-from bots.bot_receitas import RevenueBot
+from bots.bot import RevenueBot
 from api.requests.post import post_to_api
 import json
 import logging
@@ -180,7 +180,7 @@ status_label = tk.Label(root, text=RevenueBot.get_status(config["Download"]["WEB
 status_label.grid(row=2, columnspan=3, pady=15, sticky='nsew')
 
 # Criar os botões princípais
-start_button = tk.Button(root, text="Start", command=run_bot)
+start_button = tk.Button(root, text="Iniciar", command=run_bot)
 start_button.grid(row=3, column=0, sticky='nsew')
 
 configs_button = tk.Button(root, text="Configs", command=configs_action)
