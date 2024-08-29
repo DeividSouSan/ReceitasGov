@@ -1,3 +1,5 @@
+from datetime import datetime
+import sys
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import filedialog
@@ -5,14 +7,17 @@ from data.data_processing import DataProcess
 from bots.bot_receitas import RevenueBot
 from api.requests.post import send_post_request
 import json
-
+import logging
 import os
 import configparser
 
 
 path = os.getcwd()
-print(path)
 
+log_filename = f"{path}/logs/logs_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
+logging.basicConfig(filename=log_filename, level=logging.INFO)
+
+logging.info(f"Iniciando o programa às {datetime.now().strftime('%d%m%Y_%H_%M_%S')}...")
 
 def run_bot():
     bot = RevenueBot(config["Download"]["WEBSITE_URL"],
@@ -31,7 +36,7 @@ def open_file():
     # Abrir diálogo para selecionar o arquivo
     file_path = filedialog.askopenfilename(
         title="Selecione um arquivo",
-        filetypes=[("Arquivos JSON", "*.json"), ("Arquivos de Texto", "*.txt")]
+        filetypes=[("Arquivos de Log", "*.log")]
     )
 
     if not file_path:
@@ -113,14 +118,21 @@ def configs_action():
                             command=config_window.destroy)
     sair_button.pack(side=tk.RIGHT, padx=10, pady=10)
 
+def close():
+    logging.info(f"Finalizando o programa às {datetime.now().strftime('%d%m%Y_%H_%M_%S')}...")
+    root.destroy()
 
 def read_config(path: str):
     config = configparser.ConfigParser()
     config.read(path)
     return config
 
-config = read_config(f"{path}/config/config.ini")
-
+try:
+    config = read_config(f"{path}/config/config.ini")
+except Exception:
+    logging.warning("Arquivo de configuração não encontrado.")
+    sys.exit()
+    
 # Criar a janela principal
 root = tk.Tk()
 root.title(config["Bot"]["BOT_NAME"])
@@ -159,7 +171,7 @@ start_button.grid(row=3, column=0, sticky='nsew')
 configs_button = tk.Button(root, text="Configs", command=configs_action)
 configs_button.grid(row=3, column=1, sticky='nsew')
 
-sair_button = tk.Button(root, text="Sair", command=root.destroy)
+sair_button = tk.Button(root, text="Sair", command=close)
 sair_button.grid(row=3, column=2, sticky='nsew')
 
 # Iniciar o loop da interface
