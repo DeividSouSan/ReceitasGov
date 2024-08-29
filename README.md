@@ -1,6 +1,6 @@
 # Bot Receitas do Governo
 
-O GovReceitasRPA é um software de automação que captura receitas do governo, processa os dados e os envia para um API.
+O *GovReceitasRPA* é um software de automação que captura receitas do governo, processa os dados e os envia para um API.
 
 ## Tecnologias e Bibliotecas Utilizadas
 - **Python** (3.12.2)
@@ -11,7 +11,7 @@ O GovReceitasRPA é um software de automação que captura receitas do governo, 
 
 Outras bibliotecas que foram utilizadas encontram-se no arquivo `requirements.txt`.
 
-## Funcionalidades
+## Outras Funcionalidades
 ### Logging
 A biblioteca built-in `logging` do Python foi utilizada para fornecer algumas informações do status da execução do programa.
 ### Configurações
@@ -33,27 +33,27 @@ Para conseguir configurar a aplicação dinâmicamente, algumas variáveis foram
   <img src="https://github.com/user-attachments/assets/7e68d36b-0694-4cc2-a9d4-4707271e2afe"/>
 </div>
 
-# Como rodar?
-## Como Rodar o Projeto?
+## Como rodar o projeto?
 
 ### Clonando
 
 Primeiro clone o repositório. Isso pode ser feito baixando-o ou utilizando o comando:
 
-```
+```bash
 git clone git@github.com:DeividSouSan/GovReceitasRPA.git
 ```
 
-Utilizando sua IDE ou Editor de Texto, abra o projeto. Se estiver pelo terminal acesse a pasta onde baixou ou clonou o projeto e escreva: 
+Utilizando sua IDE ou Editor de Texto, abra o projeto. Se estiver pelo terminal acesse a pasta onde baixou ou clonou o projeto e digite: 
 
-```
+```bash
 cd GovReceitasRPA
 ```
 
 ### Ambiente Virtual
 
 Dentro da pasta do projeto, inicie um ambiente virtual. É recomendado instalar as bibliotecas em um ambiente virtual para evitar conflitos de versões com os pacotes instalados globalmente. Pelo terminal, crie um ambiente virtual utilizando:
-```
+
+```bash
 python3 -m venv <nome_do_ambiente_virtual>
 ```
 
@@ -61,30 +61,30 @@ Geralmente o nome utilizado é `.venv`, mas isso é de sua escolha.
 
 Para ativar o ambiente virutal no linux:
 
-```
+```bash
 source .venv/bin/activate
 ```
 
 Ou
 
-```
+```bash
 . .venv/bin/activate
 ```
 
 Para desativa-lo:
 
-```
+```bash
 deactivate
 ```
 
 No windows:
-```
+```bash
 .venv/Scripts/activate
 ```
 
 Para desativa-lo:
 
-```
+```bash
 .venv/Scripts/deactivate
 ```
 
@@ -99,6 +99,7 @@ Assim, todas as dependencias que estão dentro do arquivo `requirements.txt` ser
 
 ### Rodando
 Para rodar a aplicação escreva entre no diretório do repositório (`GovReceitasRPA`) e digite no terminal:
-```
+
+```bash
 python3 main.py
 ```
