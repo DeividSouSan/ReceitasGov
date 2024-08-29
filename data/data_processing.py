@@ -11,8 +11,13 @@ class DataProcess:
         }
         
         self.file = pd.read_csv(f"{os.getcwd()}/csv/receitas.csv", delimiter=";")
+        
+        if os.path.exists("output"):
+            pass
+        else:
+            os.mkdir("output")
 
-    def get_json(self, log: bool = False) -> str:
+    def get_json(self) -> str:
         """
         Processa os dados do arquivo CSV e retorna um JSON.
         
@@ -23,13 +28,12 @@ class DataProcess:
         
         json_data = self.file.to_json(orient='records')
         
-        if log:
-            with open("output/data.json", 'w', encoding='utf-8') as f:
-                json.dump(json.loads(json_data), f, ensure_ascii=False, indent=4)
+        with open("output/data.json", 'w', encoding='utf-8') as f:
+            json.dump(json.loads(json_data), f, ensure_ascii=False, indent=4)
 
         return json_data
     
-    def process(self, data, log: bool = False) -> dict:
+    def process(self, data) -> dict:
         """
         Processa os dados do JSON e retorna um dicionário.
         
@@ -39,8 +43,8 @@ class DataProcess:
         """
         self.my_data["data"] = json.loads(data)
         
-        if log:
-            with open('output/output.json', 'w', encoding='utf-8') as f:
-                json.dump(self.my_data, f, ensure_ascii=False, indent=4)
+            
+        with open('output/output.json', 'w', encoding='utf-8') as f:
+            json.dump(self.my_data, f, ensure_ascii=False, indent=4)
 
         return self.my_data

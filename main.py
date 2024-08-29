@@ -36,8 +36,8 @@ def run_bot():
 
     data = DataProcess(config["Author"]["AUTHOR"])
     
-    data_json = data.get_json(log=True)
-    data.process(data_json, log=True)
+    data_json = data.get_json()
+    data.process(data_json)
 
     send_post_request(config["API"]["API_URL"])
 
