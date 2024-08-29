@@ -1,50 +1,64 @@
 from datetime import datetime
 import json
+import logging
 import os
 import pandas as pd
 
+
 class DataProcess:
+    """
+    Processa e manipula os dados do DataFrame e salva em arquivos JSON.
+    """
     def __init__(self, author: str):
-        self.my_data = {
-            "author": author,
-            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
-        }
+        self.author = author
         
-        self.file = pd.read_csv(f"{os.getcwd()}/csv/receitas.csv", delimiter=";")
-        
+        base_path = os.getcwd()
+        self.dataframe = pd.read_csv(f"{base_path}/csv/receitas.csv", delimiter=";")
+
         if os.path.exists("output"):
-            pass
+            logging.info(f"Diretório output já existe.")
         else:
             os.mkdir("output")
+            logging.info(f"Diretório output foi criado.")
+            
 
-    def get_json(self) -> str:
+    def handle_data(self, columns: list) -> any:
         """
-        Processa os dados do arquivo CSV e retorna um JSON.
-        
+        Manipula os dados do DataFrame selecionando apenas as colunas passadas. O json é salvo em um arquivo 
+        chamado 'data.json' e também é retornado pela função.
+
         Args:
-            log (bool): Se True, salva o JSON em um arquivo.
+            columns (list): Lista com os nomes das colunas que deseja selecionar.
         """
-        self.file = self.file[['Órgão', 'Espécie', 'Orçamento Atualizado (Valor Previsto)', 'Receita Realizada (Valor Arrecadado)']]
-        
-        json_data = self.file.to_json(orient='records')
-        
-        with open("output/data.json", 'w', encoding='utf-8') as f:
-            json.dump(json.loads(json_data), f, ensure_ascii=False, indent=4)
 
+        if columns:
+            json_data = self.dataframe[columns].to_json(orient='records')
+        else:
+            json_data = self.dataframe.to_json(orient='records')
+
+        with open("output/data.json", 'w', encoding='utf-8') as file:
+            json.dump(json.loads(json_data), file, ensure_ascii=False, indent=4)
+
+        logging.info(f"Dataframe convertido para JSON com sucesso.")
         return json_data
-    
-    def process(self, data) -> dict:
+
+    def output_data(self, data: any) -> dict:
         """
-        Processa os dados do JSON e retorna um dicionário.
-        
+        Transforma um arquivo JSON em um dicionário e salva em um arquivo chamado 'output.json', o conteúdo do dicionáro
+        é retornado pela função.
+
         Args:
             data (str): JSON com os dados.
-            log (bool): Se True, salva o dicionário em um arquivo JSON.
         """
-        self.my_data["data"] = json.loads(data)
-        
-            
-        with open('output/output.json', 'w', encoding='utf-8') as f:
-            json.dump(self.my_data, f, ensure_ascii=False, indent=4)
 
-        return self.my_data
+        output = {
+            "author": self.author,
+            "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
+            "Data": json.loads(data)
+            }
+
+        with open('output/output.json', 'w', encoding='utf-8') as file:
+            json.dump(output, file, ensure_ascii=False, indent=4)
+            
+        logging.info(f"Dados de saída salvos com sucesso.")
+        return output
