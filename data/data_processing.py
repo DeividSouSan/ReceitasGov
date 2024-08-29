@@ -54,7 +54,7 @@ class DataProcess:
         output = {
             "author": self.author,
             "date": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
-            "Data": json.loads(data)
+            "data": json.loads(data)
             }
 
         with open('output/output.json', 'w', encoding='utf-8') as file:
