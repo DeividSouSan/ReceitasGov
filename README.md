@@ -30,7 +30,7 @@ Para conseguir configurar a aplicação dinâmicamente, algumas variáveis foram
 
 ### Janela Logs
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7e68d36b-0694-4cc2-a9d4-4707271e2afe"/>
+  <img src="https://github.com/user-attachments/assets/eca1cbd6-35ac-4810-b5b1-84e2dceccb61"/>
 </div>
 
 ## Como rodar o projeto?
