@@ -6,7 +6,8 @@ from time import sleep
 import requests
 
 
-class ReceiptsBot:
+
+class RevenueBot:
     """
     Bot para baixar os dados de receitas do Portal da Transparência.
     """
