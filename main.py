@@ -14,6 +14,16 @@ import configparser
 
 path = os.getcwd()
 
+if os.path.exists("logs"):
+    pass
+else:
+    os.mkdir("logs")
+
+if os.path.exists("csv"):
+    pass
+else:
+    os.mkdir("csv")
+
 log_filename = f"{path}/logs/logs_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
 logging.basicConfig(filename=log_filename, level=logging.INFO)
 
