@@ -24,6 +24,12 @@ if os.path.exists("csv"):
 else:
     os.mkdir("csv")
     
+# Configurações de Log
+log_filename = f"{path}/logs/logs_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
+logging.basicConfig(filename=log_filename, level=logging.INFO)
+
+logging.info(f"Iniciando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}...")
+    
 # Carregando os dados do arquivo de configuração
 def read_config(path: str):
     config = configparser.ConfigParser()
@@ -36,11 +42,7 @@ except Exception:
     logging.warning("Arquivo de configuração não encontrado.")
     sys.exit()
 
-# Configurações de Log
-log_filename = f"{path}/logs/logs_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
-logging.basicConfig(filename=log_filename, level=logging.INFO)
 
-logging.info(f"Iniciando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}...")
 
 # Funções para executar as ações dos botões
 def run_bot():
@@ -55,7 +57,7 @@ def run_bot():
 
     post_to_api(config["API"]["API_URL"])
     
-    messagebox.showinfo("Sucesso", "Dados enviados para API com sucesso, o arquivo com a saída enviada também foi gerado e pode se acessado no diretório 'output'.")
+    messagebox.showinfo("Sucesso", "Dados enviados para API com sucesso, o arquivo com a saída enviada também foi gerado e pode ser acessado no diretório 'output'.")
 
 def open_file():
     # Abrir diálogo para selecionar o arquivo
