@@ -146,7 +146,6 @@ def close():
     logging.info(f"Finalizando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}...")
     root.destroy()
 
-
 # Criar a janela principal
 root = tk.Tk()
 root.title(config["Bot"]["BOT_NAME"])
@@ -176,7 +175,9 @@ subtitle_label = tk.Label(root, text=config["Bot"]["BOT_DESC"], font=("Helvetica
 subtitle_label.grid(row=1, columnspan=3, pady=5, sticky='nsew')
 
 # Label com o status da página
-status_label = tk.Label(root, text=RevenueBot.get_status(config["Download"]["WEBSITE_URL"]), font=("Helvetica", 10))
+page_is_online = RevenueBot.get_status(config["Download"]["WEBSITE_URL"])
+status_label_text = "Online" if page_is_online else "Offline"
+status_label = tk.Label(root, text=f"A página está: {status_label_text}", font=("Helvetica", 10))
 status_label.grid(row=2, columnspan=3, pady=15, sticky='nsew')
 
 # Criar os botões princípais

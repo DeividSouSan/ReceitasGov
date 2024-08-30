@@ -23,7 +23,7 @@ class RevenueBot:
         self.driver = Chrome(options=chrome_options)
 
     @staticmethod
-    def get_status(web_url: str) -> str:
+    def get_status(web_url: str) -> bool:
         """
         Retorna o status da página.
 
@@ -38,11 +38,11 @@ class RevenueBot:
             response = requests.get(web_url, headers=headers)
 
             if response.status_code == 200:
-                return "Status da Página: Online"
+                return True
             else:
-                return f"Status da Página: Offline. Código de status: {response.status_code}"
+                return False
         except requests.exceptions.RequestException as e:
-            return f"A página está offline. Erro: {e}"
+            return False
 
     def clear_folder(self) -> None:
         """
@@ -56,6 +56,9 @@ class RevenueBot:
         """
         Inicia o processo de donwload da receita.
         """
+        
+        if self.get_status(self.url) is False:
+            raise Exception("A página está offline.")
 
         self.clear_folder()  # Limpa o diretório de downloads (csv/)
 
