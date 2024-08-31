@@ -1,7 +1,8 @@
-from datetime import datetime
 import json
 import logging
 import os
+from datetime import datetime
+
 import pandas as pd
 
 
@@ -18,8 +19,7 @@ class DataProcess:
         }
 
         base_path = os.getcwd()
-        self.dataframe = pd.read_csv(
-            f"{base_path}/csv/receitas.csv", delimiter=";")
+        self.dataframe = pd.read_csv(f"{base_path}/csv/receitas.csv", delimiter=";")
 
         if os.path.exists("output"):
             logging.info(f"Diretório output já existe.")
@@ -29,7 +29,7 @@ class DataProcess:
 
     def handle_data(self, columns: list) -> any:
         """
-        Manipula os dados do DataFrame selecionando apenas as colunas passadas. O json é salvo em um arquivo 
+        Manipula os dados do DataFrame selecionando apenas as colunas passadas. O json é salvo em um arquivo
         chamado 'data.json' e também é retornado pela função.
 
         Args:
@@ -37,13 +37,12 @@ class DataProcess:
         """
 
         if columns:
-            json_data = self.dataframe[columns].to_json(orient='records')
+            json_data = self.dataframe[columns].to_json(orient="records")
         else:
-            json_data = self.dataframe.to_json(orient='records')
+            json_data = self.dataframe.to_json(orient="records")
 
-        with open("output/data.json", 'w', encoding='utf-8') as file:
-            json.dump(json.loads(json_data), file,
-                      ensure_ascii=False, indent=4)
+        with open("output/data.json", "w", encoding="utf-8") as file:
+            json.dump(json.loads(json_data), file, ensure_ascii=False, indent=4)
 
         logging.info(f"Dataframe convertido para JSON com sucesso.")
         return json_data
@@ -59,7 +58,7 @@ class DataProcess:
 
         self.output["data"] = json.loads(data)
 
-        with open('output/output.json', 'w', encoding='utf-8') as file:
+        with open("output/output.json", "w", encoding="utf-8") as file:
             json.dump(self.output, file, ensure_ascii=False, indent=4)
 
         logging.info(f"Dados de saída salvos com sucesso.")

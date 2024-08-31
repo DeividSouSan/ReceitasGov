@@ -43,7 +43,7 @@ Primeiro clone o repositório. Isso pode ser feito baixando-o ou utilizando o co
 git clone git@github.com:DeividSouSan/GovReceitasRPA.git
 ```
 
-Utilizando sua IDE ou Editor de Texto, abra o projeto. Se estiver pelo terminal acesse a pasta onde baixou ou clonou o projeto e digite: 
+Utilizando sua IDE ou Editor de Texto, abra o projeto. Se estiver pelo terminal acesse a pasta onde baixou ou clonou o projeto e digite:
 
 ```bash
 cd GovReceitasRPA
