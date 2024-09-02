@@ -5,14 +5,15 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import messagebox
 
-from api.requests.post import post_to_api
+from api.requests.save_data import save_data
 from bots.get_public_revenue_bot import GetPublicRevenueBot
-from data.data_processing import DataProcess
+from data.data_handler import DataProcess
 from gui.frames.config_page import ConfigPage
 from gui.frames.read_files_page import ReadFilePage
 from utils.get_page_status import get_page_status
 
-path = os.getcwd()
+current_dir = os.getcwd()
+path = os.path.join(current_dir, "source")
 
 
 def read_config(path: str):
@@ -21,7 +22,7 @@ def read_config(path: str):
     return config
 
 
-config = read_config(os.path.join(path, "config/config.ini"))
+config = read_config(os.path.join(path, "config.ini"))
 
 
 class MainPage(tk.Frame):
@@ -94,7 +95,7 @@ class MainPage(tk.Frame):
         data_json = data_handler.handle_data(columns)
         data_handler.output_data(data_json)
 
-        post_to_api("https://66d30ae0184dce1713cf1e02.mockapi.io/data")
+        save_data(config["API"]["API_URL"])
 
         messagebox.showinfo(
             "Sucesso",

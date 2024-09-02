@@ -12,7 +12,7 @@ class GetPublicRevenueBot:
 
     def __init__(self, web_url: str, download_time: int):
         self.url = web_url
-        self.donwload_folder = f"{os.getcwd()}/csv/"
+        self.donwload_folder = os.path.join(os.getcwd(), "source/data/csv")
         self.download_wait_time = download_time
 
         chrome_options = ChromeOptions()

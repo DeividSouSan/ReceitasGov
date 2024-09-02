@@ -14,6 +14,7 @@ class ReadFilePage(tk.Frame):
         global text_area
         text_area = tk.Text(self, wrap=tk.WORD)
         text_area.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
+        text_area.insert(tk.END, "Selecione um arquivo para exibir o conteúdo.")
 
         # Criar um botão para abrir o arquivo
         open_button = tk.Button(self, text="Abrir Arquivo", command=self.open_file)

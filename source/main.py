@@ -8,7 +8,9 @@ from gui.window import Window
 path = os.getcwd()
 
 # Configurando o log
-log_filename = f"{path}/logs/logs_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
+log_filename = (
+    f"{path}/source/logs/logs_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
+)
 logging.basicConfig(filename=log_filename, level=logging.INFO)
 
 logging.info(

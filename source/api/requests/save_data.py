@@ -6,9 +6,10 @@ import requests
 
 
 def save_data(url: str) -> None:
-    base_path = os.getcwd()
 
-    with open(f"{base_path}/output/output.json", "r", encoding="utf-8") as file:
+    with open(
+        os.path.join(os.getcwd(), "source/output/output.json"), "r", encoding="utf-8"
+    ) as file:
         data_json = json.loads(file.read())
 
     response = requests.post(url, json=data_json)
