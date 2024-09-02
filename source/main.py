@@ -9,7 +9,7 @@ path = os.getcwd()
 
 # Configurando o log
 log_filename = (
-    f"{path}/source/logs/logs_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
+    f"{path}/source/logs/app_usage_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
 )
 logging.basicConfig(filename=log_filename, level=logging.INFO)
 
