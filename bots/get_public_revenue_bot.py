@@ -1,7 +1,6 @@
 import os
 from time import sleep
 
-import requests
 from selenium.webdriver import Chrome, ChromeOptions
 from selenium.webdriver.common.by import By
 
@@ -27,7 +26,9 @@ class GetPublicRevenueBot:
         """
         Limpa a pasta de downloads (csv) se ela não estiver vazia.
         """
-        if len(os.listdir(self.donwload_folder)) > 0:
+        n_files = len(os.listdir(self.donwload_folder))
+
+        if n_files > 0:
             for file in os.listdir(self.donwload_folder):
                 os.remove(os.path.join(self.donwload_folder, file))
 
