@@ -98,7 +98,7 @@ pip install -r requirements.txt
 Assim, todas as dependencias que estão dentro do arquivo `requirements.txt` serão baixadas para o ambiente virtual.
 
 ### Rodando
-Para rodar a aplicação escreva entre no diretório do repositório (`GovReceitasRPA`) e digite no terminal:
+Para rodar a aplicação entre no diretório do repositório (`GovReceitasRPA`) e digite no terminal:
 
 ```bash
 python3 main.py
