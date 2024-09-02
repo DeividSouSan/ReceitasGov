@@ -22,10 +22,10 @@ class DataProcess:
             os.path.join(os.getcwd(), "source/data/csv/receitas.csv"), delimiter=";"
         )
 
-        if os.path.exists("source/output"):
+        if os.path.exists("source/logs/output"):
             logging.info(f"Diretório output já existe.")
         else:
-            os.mkdir("source/output")
+            os.mkdir("source/logs/output")
             logging.info(f"Diretório output foi criado.")
 
     def handle_data(self, columns: list) -> any:
@@ -42,7 +42,7 @@ class DataProcess:
         else:
             json_data = self.dataframe.to_json(orient="records")
 
-        with open("source/output/data.json", "w", encoding="utf-8") as file:
+        with open("source/logs/output/data.json", "w", encoding="utf-8") as file:
             json.dump(json.loads(json_data), file, ensure_ascii=False, indent=4)
 
         logging.info(f"Dataframe convertido para JSON com sucesso.")
@@ -59,8 +59,9 @@ class DataProcess:
 
         self.output["data"] = json.loads(data)
 
-        with open("source/output/output.json", "w", encoding="utf-8") as file:
+        with open("source/logs/output/output.json", "w", encoding="utf-8") as file:
             json.dump(self.output, file, ensure_ascii=False, indent=4)
 
         logging.info(f"Dados de saída salvos com sucesso.")
+
         return self.output
