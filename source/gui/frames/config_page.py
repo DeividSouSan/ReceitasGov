@@ -3,8 +3,6 @@ import os
 import tkinter as tk
 from tkinter import messagebox
 
-path = os.getcwd()
-
 
 def read_config(path: str):
     config = configparser.ConfigParser()
@@ -12,7 +10,7 @@ def read_config(path: str):
     return config
 
 
-config = read_config(os.path.join(path, "config/config.ini"))
+config = read_config(os.path.join(os.getcwd(), "source/config.ini"))
 
 
 class ConfigPage(tk.Frame):
@@ -23,7 +21,7 @@ class ConfigPage(tk.Frame):
 
         # Ler o conteúdo do arquivo .ini
         try:
-            with open(f"{path}/config/config.ini", "r") as env_file:
+            with open(os.path.join(os.getcwd(), "source/config.ini"), "r") as env_file:
                 content = env_file.read()
         except FileNotFoundError:
             content = ""
@@ -47,7 +45,7 @@ class ConfigPage(tk.Frame):
         new_content = text_area.get("1.0", tk.END)
 
         try:
-            with open(f"{path}/config/config.ini", "w") as env_file:
+            with open(os.path.join(os.getcwd(), "source/config.ini"), "w") as env_file:
                 env_file.write(new_content)
             messagebox.showinfo(
                 "Sucesso",
