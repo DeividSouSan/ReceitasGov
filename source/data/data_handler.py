@@ -28,7 +28,7 @@ class DataProcess:
             os.mkdir("source/logs/output")
             logging.info(f"Diretório output foi criado.")
 
-    def handle_data(self, columns: list) -> any:
+    def jsonify(self, columns: list) -> any:
         """
         Manipula os dados do DataFrame selecionando apenas as colunas passadas. O json é salvo em um arquivo
         chamado 'data.json' e também é retornado pela função.
@@ -48,7 +48,7 @@ class DataProcess:
         logging.info(f"Dataframe convertido para JSON com sucesso.")
         return json_data
 
-    def output_data(self, data: any) -> dict:
+    def output(self, data: any) -> dict:
         """
         Transforma um arquivo JSON em um dicionário e salva em um arquivo chamado 'output.json', o conteúdo do dicionáro
         é retornado pela função.
