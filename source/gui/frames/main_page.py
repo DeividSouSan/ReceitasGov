@@ -38,11 +38,7 @@ class MainPage(tk.Frame):
         title_label.grid(row=0, columnspan=3, pady=10, sticky="nsew")
 
         # Cria botão para abrir os logs ou saídas
-        open_file_btn = tk.Button(
-            self,
-            text="Open Files",
-            command=lambda: self.controller.show_frame(ReadFilePage),
-        )
+        open_file_btn = tk.Button(self, text="Open Files", command=self.open_config)
         open_file_btn.grid(row=0, column=3, sticky="nsew")
 
         # Criar o subtítulo
@@ -101,6 +97,9 @@ class MainPage(tk.Frame):
             "Sucesso",
             "Dados enviados para API com sucesso, o arquivo com a saída enviada também foi gerado e pode ser acessado no diretório 'output'.",
         )
+
+    def open_config(self):
+        self.controller.show_frame(ReadFilePage)
 
     def exit(self):
         logging.info(
