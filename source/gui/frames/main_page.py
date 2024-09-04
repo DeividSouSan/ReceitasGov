@@ -26,11 +26,14 @@ config = read_config(os.path.join(path, "config.ini"))
 
 
 class MainPage(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, bot):
         self.controller = controller
         self.parent = parent
 
-        tk.Frame.__init__(self, parent)
+        self.create_widgets()
+
+    def create_widgets(self):
+        tk.Frame.__init__(self, self.parent)
 
         title_label = tk.Label(
             self, text=config["Bot"]["BOT_NAME"], font=("Helvetica", 16, "bold")
@@ -38,7 +41,7 @@ class MainPage(tk.Frame):
         title_label.grid(row=0, columnspan=3, pady=10, sticky="nsew")
 
         # Cria botão para abrir os logs ou saídas
-        open_file_btn = tk.Button(self, text="Open Files", command=self.open_config)
+        open_file_btn = tk.Button(self, text="Open Files", command=self.files)
         open_file_btn.grid(row=0, column=3, sticky="nsew")
 
         # Criar o subtítulo
@@ -63,9 +66,7 @@ class MainPage(tk.Frame):
             logging.error("A página está offline.")
             start_button["state"] = "disabled"
 
-        configs_button = tk.Button(
-            self, text="Configs", command=lambda: self.controller.show_frame(ConfigPage)
-        )
+        configs_button = tk.Button(self, text="Configs", command=self.config)
         configs_button.grid(row=3, column=1, sticky="nsew")
 
         quit_button = tk.Button(self, text="Sair", command=self.exit)
@@ -82,7 +83,8 @@ class MainPage(tk.Frame):
 
     def start(self):
         GetPublicRevenueBot(
-            config["Download"]["WEBSITE_URL"], int(config["Download"]["DOWNLOAD_TIME"])
+            config["Download"]["WEBSITE_URL"],
+            float(config["Download"]["DOWNLOAD_TIME"]),
         ).start()
 
         columns = config["Data"]["COLUMNS"].split(",")
@@ -98,7 +100,10 @@ class MainPage(tk.Frame):
             "Dados enviados para API com sucesso, o arquivo com a saída enviada também foi gerado e pode ser acessado no diretório 'output'.",
         )
 
-    def open_config(self):
+    def configuration(self):
+        self.controller.show_frame(ConfigPage)
+
+    def files(self):
         self.controller.show_frame(ReadFilePage)
 
     def exit(self):

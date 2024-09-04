@@ -1,13 +1,9 @@
 import logging
 import tkinter as tk
 
-from gui.frames.config_page import ConfigPage
-from gui.frames.main_page import MainPage
-from gui.frames.read_files_page import ReadFilePage
-
 
 class Window(tk.Tk):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, frames: dict[str, tk.Frame], *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -22,17 +18,21 @@ class Window(tk.Tk):
 
         self.frames = dict()
 
-        for F in [MainPage, ConfigPage, ReadFilePage]:
+        for F in frames:
             frame: tk.Frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame(MainPage)
+        main_frame = next(iter(self.frames.values()))
+        print(main_frame)
+        self.show_frame(main_frame)
 
         logging.info("Janela principal carregada com sucesso.")
 
     def show_frame(self, cont):
+        print(cont)
         selected_frame = self.frames[cont]
         frame_name = str(selected_frame).replace("frame", "").replace(".!", "")
-        logging.info(f"Frame {frame_name} selecionado.")
         selected_frame.tkraise()
+
+        logging.info(f"Frame {frame_name} carregado.")

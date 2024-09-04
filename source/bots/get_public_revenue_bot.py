@@ -60,7 +60,9 @@ class GetPublicRevenueBot:
             By.XPATH,
             "/html/body/main/div[2]/div[2]/div[2]/div[2]/div[5]/div/div/div[1]/button",
         ).click()
+
         self.driver.find_element(By.XPATH, "//*[@id='receitas-links']/li[2]/a").click()
+
         self.driver.find_element(
             By.XPATH, "/html/body/main/div[2]/div/div[2]/div[2]/ul/li[2]/a"
         ).click()
