@@ -1,6 +1,6 @@
 # Bot Receitas do Governo
 
-O *GovReceitasRPA* é um software de automação que captura receitas do governo, processa os dados e os envia para um API.
+O *BotAutomacaoReceitas* é um software de automação que captura receitas do governo, processa os dados e os envia para um API.
 
 ## Tecnologias e Bibliotecas Utilizadas
 - **Python** (3.12.2)
@@ -40,13 +40,13 @@ Para conseguir configurar a aplicação dinâmicamente, algumas variáveis foram
 Primeiro clone o repositório. Isso pode ser feito baixando-o ou utilizando o comando:
 
 ```bash
-git clone git@github.com:DeividSouSan/GovReceitasRPA.git
+git clone git@github.com:DeividSouSan/BotAutomacaoReceitas.git
 ```
 
 Utilizando sua IDE ou Editor de Texto, abra o projeto. Se estiver pelo terminal acesse a pasta onde baixou ou clonou o projeto e digite:
 
 ```bash
-cd GovReceitasRPA
+cd BotAutomacaoReceitas
 ```
 
 ### Ambiente Virtual
@@ -98,8 +98,8 @@ pip install -r requirements.txt
 Assim, todas as dependencias que estão dentro do arquivo `requirements.txt` serão baixadas para o ambiente virtual.
 
 ### Rodando
-Para rodar a aplicação entre no diretório do repositório (`GovReceitasRPA`) e digite no terminal:
+Para rodar a aplicação entre no diretório do repositório (`BotAutomacaoReceitas`) e digite no terminal:
 
 ```bash
-python3 main.py
+python3 source/main.py
 ```
