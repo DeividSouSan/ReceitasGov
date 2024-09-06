@@ -1,4 +1,5 @@
 import json
+import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
@@ -25,8 +26,10 @@ class ReadFilePage(tk.Frame):
 
     def open_file(self):
         # Abrir diálogo para selecionar o arquivo
+        initial_dir = os.path.join(os.getcwd(), "source/logs")
         file_path = filedialog.askopenfilename(
             title="Selecione um arquivo:",
+            initialdir=initial_dir,
             filetypes=[("Arquivos de Log", "*.log"), ("Arquivos JSON", "*.json")],
         )
 
@@ -48,7 +51,7 @@ class ReadFilePage(tk.Frame):
                 "Sucesso", f"Arquivo {file_path} carregado com sucesso."
             )
         except Exception as e:
-            messagebox.showerror("Erro", f"Não foi possível abrir o arquivo: {e}")
+            messagebox.showerror("Erro", f"Não foi possível abrir o arquivo.")
 
     def back(self):
         from gui.frames.main_page import MainPage
