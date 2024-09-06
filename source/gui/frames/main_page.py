@@ -26,13 +26,10 @@ config = read_config(os.path.join(path, "config.ini"))
 
 
 class MainPage(tk.Frame):
-    def __init__(self, parent, controller, bot):
+    def __init__(self, parent, controller):
         self.controller = controller
         self.parent = parent
 
-        self.create_widgets()
-
-    def create_widgets(self):
         tk.Frame.__init__(self, self.parent)
 
         title_label = tk.Label(
@@ -66,7 +63,9 @@ class MainPage(tk.Frame):
             logging.error("A página está offline.")
             start_button["state"] = "disabled"
 
-        configs_button = tk.Button(self, text="Configs", command=self.config)
+        configs_button = tk.Button(
+            self, text="Configuration", command=self.configuration
+        )
         configs_button.grid(row=3, column=1, sticky="nsew")
 
         quit_button = tk.Button(self, text="Sair", command=self.exit)
@@ -90,8 +89,8 @@ class MainPage(tk.Frame):
         columns = config["Data"]["COLUMNS"].split(",")
 
         data_handler = DataProcess(config["Author"]["AUTHOR"])
-        data_json = data_handler.handle_data(columns)
-        data_handler.output_data(data_json)
+        data_json = data_handler.jsonify(columns)
+        data_handler.make_output(data_json)
 
         save_data(config["API"]["API_URL"])
 
