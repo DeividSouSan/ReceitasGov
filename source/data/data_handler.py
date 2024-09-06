@@ -48,7 +48,7 @@ class DataProcess:
         logging.info(f"Dataframe convertido para JSON com sucesso.")
         return json_data
 
-    def output(self, data: any) -> dict:
+    def make_output(self, data: any) -> dict:
         """
         Transforma um arquivo JSON em um dicionário e salva em um arquivo chamado 'output.json', o conteúdo do dicionáro
         é retornado pela função.
