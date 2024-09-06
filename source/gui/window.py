@@ -1,9 +1,11 @@
 import logging
+import os
 import tkinter as tk
+from datetime import datetime
 
 
 class Window(tk.Tk):
-    def __init__(self, frames: dict[str, tk.Frame], *args, **kwargs):
+    def __init__(self, frames: list[tk.Frame], *args, **kwargs):
 
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -23,14 +25,15 @@ class Window(tk.Tk):
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        main_frame = next(iter(self.frames.values()))
-        print(main_frame)
+        main_frame = next(iter(self.frames.keys()))
         self.show_frame(main_frame)
 
+        logging.info(
+            f"Iniciando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}..."
+        )
         logging.info("Janela principal carregada com sucesso.")
 
     def show_frame(self, cont):
-        print(cont)
         selected_frame = self.frames[cont]
         frame_name = str(selected_frame).replace("frame", "").replace(".!", "")
         selected_frame.tkraise()
