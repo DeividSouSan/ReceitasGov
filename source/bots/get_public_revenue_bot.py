@@ -15,6 +15,9 @@ class GetPublicRevenueBot:
         self.url = web_url
         self.donwload_folder = os.path.join(os.getcwd(), "source/data/csv")
 
+        if not os.path.exists(self.donwload_folder):
+            os.mkdir(self.donwload_folder)
+
         # Wait time related
         self.max_time = max_time
         self.time_spent = 0
