@@ -5,11 +5,9 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import messagebox
 
-from api.requests.save_data import save_data
-from bots.get_public_revenue_bot import GetPublicRevenueBot
-from data.data_handler import DataProcess
 from gui.frames.config_page import ConfigPage
 from gui.frames.read_files_page import ReadFilePage
+from services.automation_service import AutomationService
 from utils.get_page_status import get_page_status
 
 current_dir = os.getcwd()
@@ -29,6 +27,7 @@ class MainPage(tk.Frame):
     def __init__(self, parent, controller):
         self.controller = controller
         self.parent = parent
+        self.automation_service = AutomationService()
 
         tk.Frame.__init__(self, self.parent)
 
@@ -81,18 +80,7 @@ class MainPage(tk.Frame):
         self.grid_rowconfigure(4, weight=1)
 
     def start(self):
-        GetPublicRevenueBot(
-            config["Download"]["WEBSITE_URL"],
-            float(config["Download"]["DOWNLOAD_TIME"]),
-        ).start()
-
-        columns = config["Data"]["COLUMNS"].split(",")
-
-        data_handler = DataProcess(config["Author"]["AUTHOR"])
-        data_json = data_handler.jsonify(columns)
-        data_handler.make_output(data_json)
-
-        save_data(config["API"]["API_URL"])
+        self.automation_service.start(config)
 
         messagebox.showinfo(
             "Sucesso",
