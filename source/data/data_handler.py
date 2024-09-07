@@ -28,7 +28,7 @@ class DataProcess:
             os.mkdir("source/logs/output")
             logging.info(f"Diretório output foi criado.")
 
-    def jsonify(self, columns: list) -> any:
+    def jsonify(self, columns: str) -> None:
         """
         Manipula os dados do DataFrame selecionando apenas as colunas passadas. O json é salvo em um arquivo
         chamado 'data.json' e também é retornado pela função.
@@ -38,6 +38,7 @@ class DataProcess:
         """
 
         if columns:
+            columns = columns.split(",")
             json_data = self.dataframe[columns].to_json(orient="records")
         else:
             json_data = self.dataframe.to_json(orient="records")
@@ -45,23 +46,22 @@ class DataProcess:
         with open("source/logs/output/data.json", "w", encoding="utf-8") as file:
             json.dump(json.loads(json_data), file, ensure_ascii=False, indent=4)
 
-        logging.info(f"Dataframe convertido para JSON com sucesso.")
-        return json_data
+        logging.info(
+            f"Dataframe convertido para JSON com sucesso. Dados salvos em 'data.json'."
+        )
 
-    def make_output(self, data: any) -> dict:
+    def make_output(self) -> None:
         """
-        Transforma um arquivo JSON em um dicionário e salva em um arquivo chamado 'output.json', o conteúdo do dicionáro
-        é retornado pela função.
+        Transforma um arquivo JSON em um dicionário e salva em um arquivo chamado 'output.json'.
 
-        Args:
-            data (str): JSON com os dados.
         """
+        # Lendo o arquivo data.json
+        with open("source/logs/output/data.json", "r", encoding="utf-8") as file:
+            data = json.loads(file.read())
+            self.output["data"] = data
 
-        self.output["data"] = json.loads(data)
-
+        # Salvando o arquivo output.json
         with open("source/logs/output/output.json", "w", encoding="utf-8") as file:
             json.dump(self.output, file, ensure_ascii=False, indent=4)
 
-        logging.info(f"Dados de saída salvos com sucesso.")
-
-        return self.output
+        logging.info(f"Dados de saída salvos com sucesso em 'output.json'.")
