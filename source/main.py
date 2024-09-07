@@ -10,7 +10,11 @@ from gui.window import Window
 # Configurando o Log
 log_path = os.path.join(os.getcwd(), "source/logs")
 log_name = f"app_usage_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
-logging.basicConfig(filename=f"{log_path}/{log_name}", level=logging.INFO)
+try:
+    logging.basicConfig(filename=f"{log_path}/{log_name}", level=logging.INFO)
+except FileNotFoundError:
+    os.mkdir(log_path)
+    logging.basicConfig(filename=f"{log_path}/{log_name}", level=logging.INFO)
 
 # Iniciando a janela principal
 root = Window(frames=[MainPage, ConfigPage, ReadFilePage])
