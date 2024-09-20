@@ -3,16 +3,29 @@ import os
 import tkinter as tk
 from datetime import datetime
 
+import customtkinter as ctk
 
-class Window(tk.Tk):
+
+class Window(ctk.CTk):
     def __init__(self, frames: list[tk.Frame], *args, **kwargs):
 
-        tk.Tk.__init__(self, *args, **kwargs)
+        ctk.set_appearance_mode("dark-blue")
+        ctk.set_default_color_theme("dark-blue")
+        ctk.CTk.__init__(self, *args, **kwargs)
 
-        self.wm_title("Bot - Receitas e Despesas do Governo")
+        self.wm_title("Receitas Públicas - Portal da Transparência")
         self.wm_geometry("800x600")
+        self.wm_resizable(False, False)
+        self.iconphoto(
+            False,
+            tk.PhotoImage(
+                file=os.path.join(os.getcwd(), "source", "gui", "icon", "billing.png")
+            ),
+        )
 
-        container = tk.Frame(self, width=800, height=600)
+        container = ctk.CTkFrame(
+            self, width=800, height=600, bg_color="black", corner_radius=0
+        )
         container.pack(side="top", fill="both", expand=True)
 
         container.rowconfigure(0, weight=1)
@@ -21,7 +34,7 @@ class Window(tk.Tk):
         self.frames = dict()
 
         for F in frames:
-            frame: tk.Frame = F(container, self)
+            frame: ctk.CTkFrame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
