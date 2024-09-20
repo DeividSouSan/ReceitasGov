@@ -17,5 +17,6 @@ except FileNotFoundError:
     logging.basicConfig(filename=f"{log_path}/{log_name}", level=logging.INFO)
 
 # Iniciando a janela principal
-root = Window(frames=[MainPage, ConfigPage, ReadFilePage])
+root = Window()
+root.load_frames(frames=[MainPage, ConfigPage, ReadFilePage])
 root.mainloop()

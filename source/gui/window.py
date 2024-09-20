@@ -7,12 +7,14 @@ import customtkinter as ctk
 
 
 class Window(ctk.CTk):
-    def __init__(self, frames: list[tk.Frame], *args, **kwargs):
+    def __init__(self, *args, **kwargs):
 
+        # Define a aparência da janela e o tema padrão
         ctk.set_appearance_mode("dark-blue")
         ctk.set_default_color_theme("dark-blue")
         ctk.CTk.__init__(self, *args, **kwargs)
 
+        # Configura a janela principal
         self.wm_title("Receitas Públicas - Portal da Transparência")
         self.wm_geometry("800x600")
         self.wm_resizable(False, False)
@@ -23,18 +25,20 @@ class Window(ctk.CTk):
             ),
         )
 
-        container = ctk.CTkFrame(
+        # Configura o container principal
+        self.container = ctk.CTkFrame(
             self, width=800, height=600, bg_color="black", corner_radius=0
         )
-        container.pack(side="top", fill="both", expand=True)
+        self.container.pack(side="top", fill="both", expand=True)
 
-        container.rowconfigure(0, weight=1)
-        container.columnconfigure(0, weight=1)
+        self.container.rowconfigure(0, weight=1)
+        self.container.columnconfigure(0, weight=1)
 
+    def load_frames(self, frames: list[tk.Frame]):
         self.frames = dict()
 
         for F in frames:
-            frame: ctk.CTkFrame = F(container, self)
+            frame: ctk.CTkFrame = F(self.container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
