@@ -3,25 +3,37 @@ import os
 import tkinter as tk
 from tkinter import filedialog, messagebox
 
+import customtkinter as ctk
 
-class ReadFilePage(tk.Frame):
+
+class ReadFilePage(ctk.CTkFrame):
     def __init__(self, parent, controller):
         self.controller = controller
         self.parent = parent
 
-        tk.Frame.__init__(self, parent)
+        ctk.CTkFrame.__init__(self, parent, fg_color="#23272a")
+
+        title = ctk.CTkLabel(
+            self,
+            text="Leitura de Arquivos",
+            font=("Arial", 40, "bold"),
+            text_color="#ffffff",
+        )
+        title.pack(pady=10)
 
         # Criar uma área de texto para exibir o conteúdo do arquivo
         global text_area
-        text_area = tk.Text(self, wrap=tk.WORD)
-        text_area.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
-        text_area.insert(tk.END, "Selecione um arquivo para exibir o conteúdo.")
+        text_area = ctk.CTkTextbox(self, wrap=tk.WORD)
+        text_area.pack(expand=True, fill=tk.BOTH, padx=50, pady=10)
+        text_area.insert(
+            tk.END, "Primeiro, selecione um arquivo para exibir o conteúdo."
+        )
 
         # Criar um botão para abrir o arquivo
-        open_button = tk.Button(self, text="Abrir Arquivo", command=self.open_file)
+        open_button = ctk.CTkButton(self, text="Abrir Arquivo", command=self.open_file)
         open_button.pack(pady=10)
 
-        open_button = tk.Button(self, text="Sair", command=self.back)
+        open_button = ctk.CTkButton(self, text="Sair", command=self.back)
         open_button.pack(pady=10)
 
     def open_file(self):

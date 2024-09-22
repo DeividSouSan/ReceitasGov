@@ -5,8 +5,11 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import messagebox
 
+import customtkinter as ctk
+from gui.frames.base_page import BasePage
 from gui.frames.config_page import ConfigPage
 from gui.frames.read_files_page import ReadFilePage
+from PIL import Image
 from services.automation_service import AutomationService
 from utils.get_page_status import get_page_status
 
@@ -14,65 +17,103 @@ current_dir = os.getcwd()
 path = os.path.join(current_dir, "source")
 
 
-def read_config(path: str):
-    config = configparser.ConfigParser()
-    config.read(path)
-    return config
-
-
-config = read_config(os.path.join(path, "config.ini"))
-
-
-class MainPage(tk.Frame):
+class MainPage(BasePage):
     def __init__(self, parent, controller):
+        BasePage.__init__(self, parent)
+
+        # Window instance
         self.controller = controller
-        self.parent = parent
-        self.automation_service = AutomationService()
 
-        tk.Frame.__init__(self, self.parent)
+        # Page Text Variables
+        page_name = "Receitas Portal da Transparência"
+        page_subtitle = "Esse software foi desenvolvido para baixar os dados de receitas do Portal da Transparência do Governo Federal."
 
-        title_label = tk.Label(
-            self, text=config["Bot"]["BOT_NAME"], font=("Helvetica", 16, "bold")
-        )
-        title_label.grid(row=0, columnspan=3, pady=10, sticky="nsew")
-
-        # Cria botão para abrir os logs ou saídas
-        open_file_btn = tk.Button(self, text="Open Files", command=self.files)
-        open_file_btn.grid(row=0, column=3, sticky="nsew")
+        # Widgets
+        title = ctk.CTkLabel(
+            self, text=page_name, text_color="#ffffff", font=("Arial", 40, "bold")
+        ).grid(row=0, column=0, columnspan=3, pady=10)
 
         # Criar o subtítulo
-        subtitle_label = tk.Label(
-            self, text=config["Bot"]["BOT_DESC"], font=("Helvetica", 12)
-        )
-        subtitle_label.grid(row=1, columnspan=3, pady=5, sticky="nsew")
+        subtitle = ctk.CTkLabel(
+            self,
+            text=page_subtitle,
+            text_color="#ffffff",
+            font=("Arial", 16),
+            fg_color=None,
+            wraplength=500,
+        ).grid(row=2, column=0, columnspan=4)
 
         # Label com o status da página
-        is_page_online = get_page_status(config["Download"]["WEBSITE_URL"])
+        is_page_online = get_page_status("https://portaldatransparencia.gov.br/")
         status_label_text = "Online" if is_page_online else "Offline"
-        status_label = tk.Label(
-            self, text=f"A página está: {status_label_text}", font=("Helvetica", 10)
-        )
-        status_label.grid(row=2, columnspan=3, pady=15, sticky="nsew")
 
-        # Criar os botões princípais
-        start_button = tk.Button(self, text="Iniciar", command=self.start)
-        start_button.grid(row=3, column=0, sticky="nsew")
+        page_status = ctk.CTkLabel(
+            self,
+            text=f"Status da Página: {status_label_text}",
+            text_color="#ffffff",
+            font=("Arial", 16),
+            fg_color=None,
+        ).grid(row=3, columnspan=4, pady=0)
+
+        # Imagem
+
+        graph_img = ctk.CTkImage(
+            light_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
+            dark_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
+            size=(250, 250),
+        )
+
+        ctk.CTkLabel(self, text="", image=graph_img).grid(
+            row=1, column=0, columnspan=4, pady=10, sticky="nsew"
+        )
+
+        # Cria botão para abrir os logs ou saídas
+        gear_img = ctk.CTkImage(
+            light_image=Image.open(os.path.join(path, "gui", "img", "gear.png")),
+            dark_image=Image.open(os.path.join(path, "gui", "img", "gear.png")),
+            size=(30, 30),
+        )
+
+        configuration = ctk.CTkButton(
+            self,
+            text="",
+            height=40,
+            width=40,
+            image=gear_img,
+            command=self.configuration,
+            fg_color="#2c2f33",
+            corner_radius=200,
+            border_spacing=0,
+        ).grid(row=0, column=3)
+
+        start_button = ctk.CTkButton(
+            self,
+            text="INICIAR",
+            font=("Arial", 20, "bold"),
+            command=self.start,
+            fg_color="#7289da",
+            width=200,
+            height=70,
+        ).grid(row=4, column=0, columnspan=2, padx=50, pady=0, sticky="nw")
+
+        open_files = ctk.CTkButton(
+            self,
+            text="ARQUIVOS",
+            font=("Arial", 20, "bold"),
+            command=self.files,
+            fg_color="#7289da",
+            width=200,
+            height=70,
+        ).grid(row=4, column=2, columnspan=2, padx=50, pady=0, sticky="ne")
 
         if not is_page_online:
             logging.error("A página está offline.")
             start_button["state"] = "disabled"
 
-        configs_button = tk.Button(
-            self, text="Configuration", command=self.configuration
-        )
-        configs_button.grid(row=3, column=1, sticky="nsew")
-
-        quit_button = tk.Button(self, text="Sair", command=self.exit)
-        quit_button.grid(row=3, column=2, sticky="nsew")
-
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
         self.grid_columnconfigure(2, weight=1)
+        self.grid_columnconfigure(3, weight=1)
         self.grid_rowconfigure(0, weight=1)
         self.grid_rowconfigure(1, weight=1)
         self.grid_rowconfigure(2, weight=1)
@@ -80,7 +121,7 @@ class MainPage(tk.Frame):
         self.grid_rowconfigure(4, weight=1)
 
     def start(self):
-        self.automation_service.start(config)
+        AutomationService().start()
 
         messagebox.showinfo(
             "Sucesso",
