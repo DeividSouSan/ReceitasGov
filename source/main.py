@@ -18,5 +18,5 @@ except FileNotFoundError:
 
 # Iniciando a janela principal
 root = Window()
-root.load_frames(frames=[MainPage, ConfigPage, ReadFilePage])
+root.load_pages(pages=[MainPage, ConfigPage, ReadFilePage])
 root.mainloop()
