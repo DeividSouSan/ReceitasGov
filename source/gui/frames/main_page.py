@@ -25,11 +25,24 @@ def read_config(path: str):
 config = read_config(os.path.join(path, "config.ini"))
 
 
-class MainPage(ctk.CTkFrame):
+class BasePage(ctk.CTkFrame):
+    def __init__(
+        self,
+        parent: ctk.CTkFrame,
+        controller: ctk.CTk,
+    ):
+        self.parent = parent  # Frame
+        self.controller = controller  # Window
+
+        ctk.CTkFrame.__init__(self, parent, fg_color="#23272a")
+
+
+class MainPage(BasePage):
     def __init__(self, parent, controller):
-        # Window relates
+        BasePage.__init__(self, parent, controller)
+
+        # Window instance
         self.controller = controller
-        self.parent = parent
 
         # Automation Service
         self.automation_service = AutomationService()
@@ -41,8 +54,6 @@ class MainPage(ctk.CTkFrame):
         self.target_url = config["Download"]["WEBSITE_URL"]
 
         # Widgets
-        ctk.CTkFrame.__init__(self, self.parent, fg_color="#23272a")
-
         title_label = ctk.CTkLabel(
             self, text=self.page_name, text_color="#ffffff", font=("Arial", 40, "bold")
         )
@@ -71,7 +82,7 @@ class MainPage(ctk.CTkFrame):
         if is_page_online:
             status_label._text_color = "green"
         else:
-            status_label._text_color = "#red"
+            status_label._text_color = "red"
 
         status_label.grid(row=3, columnspan=4, pady=15, sticky="nsew")
 
