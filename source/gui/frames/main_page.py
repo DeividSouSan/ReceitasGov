@@ -31,7 +31,7 @@ class MainPage(BasePage):
         # Widgets
         title = ctk.CTkLabel(
             self, text=page_name, text_color="#ffffff", font=("Arial", 40, "bold")
-        ).grid(row=0, column=0, columnspan=3, pady=10, sticky="nsew")
+        ).grid(row=0, column=0, columnspan=3, pady=10)
 
         # Criar o subtítulo
         subtitle = ctk.CTkLabel(
@@ -41,7 +41,7 @@ class MainPage(BasePage):
             font=("Arial", 16),
             fg_color=None,
             wraplength=500,
-        ).grid(row=2, column=0, columnspan=4, pady=5, sticky="nsew")
+        ).grid(row=2, column=0, columnspan=4)
 
         # Label com o status da página
         is_page_online = get_page_status("https://portaldatransparencia.gov.br/")
@@ -53,14 +53,14 @@ class MainPage(BasePage):
             text_color="#ffffff",
             font=("Arial", 16),
             fg_color=None,
-        ).grid(row=3, columnspan=4, pady=0, sticky="nsew")
+        ).grid(row=3, columnspan=4, pady=0)
 
         # Imagem
 
         graph_img = ctk.CTkImage(
             light_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
             dark_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
-            size=(300, 300),
+            size=(250, 250),
         )
 
         ctk.CTkLabel(self, text="", image=graph_img).grid(
@@ -89,20 +89,22 @@ class MainPage(BasePage):
         start_button = ctk.CTkButton(
             self,
             text="INICIAR",
+            font=("Arial", 20, "bold"),
             command=self.start,
             fg_color="#7289da",
             width=200,
             height=70,
-        ).grid(row=4, column=0, columnspan=2)
+        ).grid(row=4, column=0, columnspan=2, padx=50, pady=0, sticky="nw")
 
         open_files = ctk.CTkButton(
             self,
             text="ARQUIVOS",
+            font=("Arial", 20, "bold"),
             command=self.files,
             fg_color="#7289da",
             width=200,
             height=70,
-        ).grid(row=4, column=2, columnspan=2)
+        ).grid(row=4, column=2, columnspan=2, padx=50, pady=0, sticky="ne")
 
         if not is_page_online:
             logging.error("A página está offline.")
