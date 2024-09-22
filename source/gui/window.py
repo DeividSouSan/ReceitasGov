@@ -2,12 +2,17 @@ import logging
 import os
 import tkinter as tk
 from datetime import datetime
+from typing import Type
 
 import customtkinter as ctk
+from gui.frames.main_page import BasePage
 
 
 class Window(ctk.CTk):
     def __init__(self, *args, **kwargs):
+        logging.info(
+            f"Iniciando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}..."
+        )
 
         # Define a aparência da janela e o tema padrão
         ctk.set_appearance_mode("dark-blue")
@@ -34,25 +39,24 @@ class Window(ctk.CTk):
         self.container.rowconfigure(0, weight=1)
         self.container.columnconfigure(0, weight=1)
 
-    def load_frames(self, frames: list[tk.Frame]):
-        self.frames = dict()
-
-        for F in frames:
-            frame: ctk.CTkFrame = F(self.container, self)
-            self.frames[F] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
-
-        main_frame = next(iter(self.frames.keys()))
-        self.show_frame(main_frame)
-
-        logging.info(
-            f"Iniciando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}..."
-        )
         logging.info("Janela principal carregada com sucesso.")
 
-    def show_frame(self, cont):
-        selected_frame = self.frames[cont]
-        frame_name = str(selected_frame).replace("frame", "").replace(".!", "")
-        selected_frame.tkraise()
+    def load_pages(self, pages: list[Type[BasePage]]) -> None:
+        self.pages: dict[Type[BasePage], BasePage] = dict()
 
-        logging.info(f"Frame {frame_name} carregado.")
+        page_class: Type[BasePage]
+
+        for page_class in pages:
+            page_object: BasePage = page_class(parent=self.container, controller=self)
+            self.pages[page_class] = page_object
+            page_object.grid(row=0, column=0, sticky="nsew")
+
+        main_page = next(iter(self.pages.keys()))
+        self.show_page(main_page)
+
+    def show_page(self, page: Type[BasePage]) -> None:
+        selected_page: BasePage = self.pages[page]
+        page_name = str(selected_page).replace("frame", "").replace(".!", "")
+        selected_page.tkraise()
+
+        logging.info(f"Frame {page_name} carregado.")
