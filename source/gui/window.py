@@ -9,7 +9,7 @@ from gui.frames.main_page import BasePage
 
 
 class Window(ctk.CTk):
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         logging.info(
             f"Iniciando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}..."
         )
@@ -17,7 +17,7 @@ class Window(ctk.CTk):
         # Define a aparência da janela e o tema padrão
         ctk.set_appearance_mode("dark-blue")
         ctk.set_default_color_theme("dark-blue")
-        ctk.CTk.__init__(self, *args, **kwargs)
+        ctk.CTk.__init__(self)
 
         # Configura a janela principal
         self.wm_title("Receitas Públicas - Portal da Transparência")
