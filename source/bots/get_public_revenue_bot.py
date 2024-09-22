@@ -29,7 +29,7 @@ class GetPublicRevenueBot:
 
         self.driver = Chrome(options=chrome_options)
 
-    def is_folder_empty(self):
+    def is_folder_empty(self) -> bool:
         files = len(os.listdir(self.donwload_folder))
         result = not bool(files)
 
@@ -70,11 +70,12 @@ class GetPublicRevenueBot:
             By.XPATH, "/html/body/main/div[2]/div/div[2]/div[2]/ul/li[2]/a"
         ).click()
 
+        time_spent = 0
         while self.is_folder_empty():
             sleep(1)
-            self.time_spent += 1
+            time_spent += 1
 
-            if self.time_spent > self.max_time:
+            if time_spent > self.max_time:
                 logging.info(
                     f"Tempo máximo de espera atingido. Tempo esperado {self.time_spent} segundos, tempo máximo {self.max_time} segundos."
                 )
