@@ -5,7 +5,7 @@ import os
 import requests
 
 
-class ApiHandler:
+class APIHandler:
     def __init__(self, url: str):
         self.url = url
 
