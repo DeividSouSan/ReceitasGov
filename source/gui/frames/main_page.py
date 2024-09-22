@@ -129,10 +129,10 @@ class MainPage(BasePage):
         )
 
     def configuration(self):
-        self.controller.show_frame(ConfigPage)
+        self.controller.show_page(ConfigPage)
 
     def files(self):
-        self.controller.show_frame(ReadFilePage)
+        self.controller.show_page(ReadFilePage)
 
     def exit(self):
         logging.info(
