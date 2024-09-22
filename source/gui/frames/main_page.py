@@ -89,8 +89,8 @@ class MainPage(BasePage):
         # Imagem
 
         img = ctk.CTkImage(
-            light_image=Image.open(os.path.join(path, "gui", "img", "dollar_3.png")),
-            dark_image=Image.open(os.path.join(path, "gui", "img", "dollar_3.png")),
+            light_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
+            dark_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
             size=(300, 300),
         )
 
