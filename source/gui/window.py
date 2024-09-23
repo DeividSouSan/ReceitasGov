@@ -15,8 +15,7 @@ class Window(ctk.CTk):
         )
 
         # Define a aparência da janela e o tema padrão
-        ctk.set_appearance_mode("dark-blue")
-        ctk.set_default_color_theme("dark-blue")
+        self.switch_theme("light")
         ctk.CTk.__init__(self)
 
         # Configura a janela principal
@@ -31,15 +30,32 @@ class Window(ctk.CTk):
         )
 
         # Configura o container principal
-        self.container = ctk.CTkFrame(
-            self, width=800, height=600, bg_color="black", corner_radius=0
-        )
+        self.container = ctk.CTkFrame(self, width=800, height=600)
         self.container.pack(side="top", fill="both", expand=True)
 
         self.container.rowconfigure(0, weight=1)
         self.container.columnconfigure(0, weight=1)
 
         logging.info("Janela principal carregada com sucesso.")
+
+    def switch_theme(self, theme: str) -> None:
+        """_summary_
+
+        Args:
+            theme (str): "light" ou "dark"
+        """
+        if theme == "light":
+            path = os.path.join(
+                os.getcwd(), "source", "gui", "themes", "light_theme.json"
+            )
+            ctk.set_default_color_theme(path)
+        elif theme == "dark":
+            path = os.path.join(
+                os.getcwd(), "source", "gui", "themes", "dark_theme.json"
+            )
+            ctk.set_default_color_theme(path)
+
+        logging.info(f"Tema alterado para {theme}.")
 
     def load_pages(self, pages: list[Type[BasePage]]) -> None:
         self.pages: dict[Type[BasePage], BasePage] = dict()
