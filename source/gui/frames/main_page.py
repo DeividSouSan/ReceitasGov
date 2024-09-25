@@ -29,17 +29,15 @@ class MainPage(BasePage):
         page_subtitle = "Esse software foi desenvolvido para baixar os dados de receitas do Portal da Transparência do Governo Federal."
 
         # Widgets
-        title = ctk.CTkLabel(
-            self, text=page_name, text_color="#ffffff", font=("Arial", 40, "bold")
-        ).grid(row=0, column=0, columnspan=3, pady=10)
+        title = ctk.CTkLabel(self, text=page_name, font=("Arial", 40, "bold")).grid(
+            row=0, column=0, columnspan=3, pady=10
+        )
 
         # Criar o subtítulo
         subtitle = ctk.CTkLabel(
             self,
             text=page_subtitle,
-            text_color="#ffffff",
             font=("Arial", 16),
-            fg_color=None,
             wraplength=500,
         ).grid(row=2, column=0, columnspan=4)
 
@@ -50,15 +48,13 @@ class MainPage(BasePage):
         page_status = ctk.CTkLabel(
             self,
             text=f"Status da Página: {status_label_text}",
-            text_color="#ffffff",
             font=("Arial", 16),
-            fg_color=None,
         ).grid(row=3, columnspan=4, pady=0)
 
         # Imagem
 
         graph_img = ctk.CTkImage(
-            light_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
+            light_image=Image.open(os.path.join(path, "gui", "img", "graph_light.png")),
             dark_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
             size=(250, 250),
         )
@@ -69,7 +65,7 @@ class MainPage(BasePage):
 
         # Cria botão para abrir os logs ou saídas
         gear_img = ctk.CTkImage(
-            light_image=Image.open(os.path.join(path, "gui", "img", "gear.png")),
+            light_image=Image.open(os.path.join(path, "gui", "img", "gear_light.png")),
             dark_image=Image.open(os.path.join(path, "gui", "img", "gear.png")),
             size=(30, 30),
         )
@@ -81,7 +77,7 @@ class MainPage(BasePage):
             width=40,
             image=gear_img,
             command=self.configuration,
-            fg_color="#2c2f33",
+            fg_color="#588157",
             corner_radius=200,
             border_spacing=0,
         ).grid(row=0, column=3)
@@ -91,7 +87,6 @@ class MainPage(BasePage):
             text="INICIAR",
             font=("Arial", 20, "bold"),
             command=self.start,
-            fg_color="#7289da",
             width=200,
             height=70,
         ).grid(row=4, column=0, columnspan=2, padx=50, pady=0, sticky="nw")
@@ -101,7 +96,6 @@ class MainPage(BasePage):
             text="ARQUIVOS",
             font=("Arial", 20, "bold"),
             command=self.files,
-            fg_color="#7289da",
             width=200,
             height=70,
         ).grid(row=4, column=2, columnspan=2, padx=50, pady=0, sticky="ne")
