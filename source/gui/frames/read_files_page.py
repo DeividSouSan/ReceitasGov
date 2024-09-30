@@ -12,9 +12,7 @@ class ReadFilePage(BasePage):
     file_path = None
 
     def __init__(self, parent, controller):
-        BasePage.__init__(self, parent)
-
-        self.controller = controller
+        BasePage.__init__(self, parent, controller)
 
         if __class__.file_path:
             print(__class__.file_path)
@@ -30,7 +28,13 @@ class ReadFilePage(BasePage):
         global text_area
         text_area = ctk.CTkTextbox(self, wrap=tk.WORD)
         text_area.grid(
-            row=1, column=0, rowspan=3, columnspan=4, padx=40, pady=10, sticky="nsew"
+            row=1,
+            column=0,
+            rowspan=3,
+            columnspan=4,
+            padx=(40, 40),
+            pady=(10, 10),
+            sticky="nsew",
         )
         text_area.insert(
             tk.END, "Primeiro, selecione um arquivo para exibir o conteúdo."
@@ -70,7 +74,7 @@ class ReadFilePage(BasePage):
             width=200,
             height=70,
             command=self.open_file,
-        ).grid(row=4, column=0, columnspan=2)
+        ).grid(row=4, column=0, columnspan=2, padx=50, pady=(10, 20), sticky="nsw")
 
         back_button = ctk.CTkButton(
             self,
@@ -79,7 +83,7 @@ class ReadFilePage(BasePage):
             font=("Arial", 20, "bold"),
             width=200,
             height=70,
-        ).grid(row=4, column=2, columnspan=2)
+        ).grid(row=4, column=2, columnspan=2, padx=50, pady=(10, 20), sticky="nse")
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
@@ -141,6 +145,4 @@ class ReadFilePage(BasePage):
         self.load_file()
 
     def back(self):
-        from gui.frames.main_page import MainPage
-
-        self.controller.show_page(MainPage)
+        self.controller.show_page("MainPage")

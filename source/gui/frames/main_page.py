@@ -7,8 +7,6 @@ from tkinter import messagebox
 
 import customtkinter as ctk
 from gui.frames.base_page import BasePage
-from gui.frames.config_page import ConfigPage
-from gui.frames.read_files_page import ReadFilePage
 from PIL import Image
 from services.automation_service import AutomationService
 from utils.get_page_status import get_page_status
@@ -19,10 +17,7 @@ path = os.path.join(current_dir, "source")
 
 class MainPage(BasePage):
     def __init__(self, parent, controller):
-        BasePage.__init__(self, parent)
-
-        # Window instance
-        self.controller = controller
+        BasePage.__init__(self, parent, controller)
 
         # Page Text Variables
         page_name = "Receitas Portal da Transparência"
@@ -54,7 +49,7 @@ class MainPage(BasePage):
         # Imagem
 
         graph_img = ctk.CTkImage(
-            light_image=Image.open(os.path.join(path, "gui", "img", "graph_light.png")),
+            light_image=None,
             dark_image=Image.open(os.path.join(path, "gui", "img", "graph.png")),
             size=(250, 250),
         )
@@ -77,7 +72,6 @@ class MainPage(BasePage):
             width=40,
             image=gear_img,
             command=self.configuration,
-            fg_color="#588157",
             corner_radius=200,
             border_spacing=0,
         ).grid(row=0, column=3)
@@ -89,7 +83,7 @@ class MainPage(BasePage):
             command=self.start,
             width=200,
             height=70,
-        ).grid(row=4, column=0, columnspan=2, padx=50, pady=0, sticky="nw")
+        ).grid(row=4, column=0, columnspan=2, padx=50, pady=(10, 20), sticky="nsw")
 
         open_files = ctk.CTkButton(
             self,
@@ -98,7 +92,7 @@ class MainPage(BasePage):
             command=self.files,
             width=200,
             height=70,
-        ).grid(row=4, column=2, columnspan=2, padx=50, pady=0, sticky="ne")
+        ).grid(row=4, column=2, columnspan=2, padx=50, pady=(10, 20), sticky="nse")
 
         if not is_page_online:
             logging.error("A página está offline.")
@@ -123,10 +117,10 @@ class MainPage(BasePage):
         )
 
     def configuration(self):
-        self.controller.show_page(ConfigPage)
+        self.controller.show_page("ConfigPage")
 
     def files(self):
-        self.controller.show_page(ReadFilePage)
+        self.controller.show_page("ReadFilePage")
 
     def exit(self):
         logging.info(
