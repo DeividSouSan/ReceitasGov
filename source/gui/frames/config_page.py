@@ -1,61 +1,47 @@
-import configparser
 import os
 import tkinter as tk
 from tkinter import messagebox
 
 import customtkinter as ctk
+from gui.frames.base_page import BasePage
 
 
-def read_config(path: str):
-    config = configparser.ConfigParser()
-    config.read(path)
-    return config
-
-
-config = read_config(os.path.join(os.getcwd(), "source/config.ini"))
-
-
-class ConfigPage(ctk.CTkFrame):
+class ConfigPage(BasePage):
     def __init__(self, parent, controller):
-        self.controller = controller
-        self.parent = parent
-        ctk.CTkFrame.__init__(self, parent, fg_color="#23272a")
+        BasePage.__init__(self, parent, controller)
 
-        # Ler o conteúdo do arquivo .ini
-        try:
-            with open(os.path.join(os.getcwd(), "source/config.ini"), "r") as env_file:
-                content = env_file.read()
-        except FileNotFoundError:
-            content = ""
+        path = os.path.join(os.getcwd(), "source", "gui", "themes", "light_theme.json")
+        ctk.set_default_color_theme(path)
 
-        # Criar uma área de texto para editar o conteúdo do .env
-        text_area = ctk.CTkTextbox(self, height=5)
-        text_area.insert(tk.END, content)
-        text_area.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
+        # Criando o label
+        title = ctk.CTkLabel(
+            self, text="Configurações", font=("Arial", 40, "bold")
+        ).grid(row=0, column=0, columnspan=3, pady=10, sticky="nsew")
 
-        # Criar botão "Salvar"
+        self.switch_theme = ctk.CTkOptionMenu(
+            self, values=["Escuro", "Claro"], command=self.switch_theme
+        ).grid(row=1, column=0, padx=10, pady=10)
+
+        # Criando botões
         save_button = ctk.CTkButton(
-            self, text="Salvar", command=lambda: self.save(text_area)
-        )
-        save_button.pack(side=tk.LEFT, padx=10, pady=10)
+            self,
+            text="Salvar",
+        ).grid(row=2, column=0, padx=10, pady=10, sticky="nw")
 
-        # Criar botão "Sair"
-        quit_button = ctk.CTkButton(self, text="Voltar", command=self.back)
-        quit_button.pack(side=tk.RIGHT, padx=10, pady=10)
+        quit_button = ctk.CTkButton(self, text="Voltar", command=self.back).grid(
+            row=2, column=2, padx=10, pady=10, sticky="ne"
+        )
+
+    def switch_theme(self, theme: str):
+        if theme == "Escuro":
+            self.controller.switch_theme("dark")
+        elif theme == "Claro":
+            self.controller.switch_theme("light")
+        else:
+            messagebox.showerror("Erro", "Tema não encontrado.")
 
     def save(self, text_area):
-        new_content = text_area.get("1.0", tk.END)
-
-        try:
-            with open(os.path.join(os.getcwd(), "source/config.ini"), "w") as env_file:
-                env_file.write(new_content)
-            ctk.CTkInputDialog(
-                title="Sucesso", text="Configurações salvas com sucesso."
-            )
-        except Exception as e:
-            messagebox.showerror("Erro", f"Falha ao salvar as configurações: {e}")
+        pass
 
     def back(self):
-        from gui.frames.main_page import MainPage
-
-        self.controller.show_frame(MainPage)
+        self.controller.show_page("MainPage")
