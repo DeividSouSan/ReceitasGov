@@ -15,7 +15,7 @@ class Window(ctk.CTk):
         )
 
         # Define a aparência da janela e o tema padrão
-        self.switch_theme("light")
+        self.switch_theme("dark")
         ctk.CTk.__init__(self)
 
         # Configura a janela principal
@@ -64,14 +64,15 @@ class Window(ctk.CTk):
 
         for page_class in pages:
             page_object: BasePage = page_class(parent=self.container, controller=self)
-            self.pages[page_class] = page_object
+            self.pages[page_class.__name__] = page_object
             page_object.grid(row=0, column=0, sticky="nsew")
 
+        print(self.pages)
         main_page = next(iter(self.pages.keys()))
         self.show_page(main_page)
 
-    def show_page(self, page: Type[BasePage]) -> None:
-        selected_page: BasePage = self.pages[page]
+    def show_page(self, page_name: str) -> None:
+        selected_page: BasePage = self.pages[page_name]
         page_name = str(selected_page).replace("frame", "").replace(".!", "")
         selected_page.tkraise()
 
