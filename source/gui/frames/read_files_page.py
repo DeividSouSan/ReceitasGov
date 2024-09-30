@@ -47,10 +47,7 @@ class ReadFilePage(BasePage):
 
         update_img = ctk.CTkImage(
             light_image=Image.open(
-                os.path.join(self._path, "gui", "img", "update_light.png")
-            ),
-            dark_image=Image.open(
-                os.path.join(self._path, "gui", "img", "update_light.png")
+                os.path.join(self._path, "gui", "img", "update.png")
             ),
             size=(30, 30),
         )

@@ -60,8 +60,7 @@ class MainPage(BasePage):
 
         # Cria botão para abrir os logs ou saídas
         gear_img = ctk.CTkImage(
-            light_image=Image.open(os.path.join(path, "gui", "img", "gear_light.png")),
-            dark_image=Image.open(os.path.join(path, "gui", "img", "gear.png")),
+            light_image=Image.open(os.path.join(path, "gui", "img", "gear.png")),
             size=(30, 30),
         )
 
