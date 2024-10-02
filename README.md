@@ -1,26 +1,35 @@
-# Bot Receitas do Governo
+# ReceitasGov 🧾
 
 O *BotAutomacaoReceitas* é um software de automação que captura receitas do governo, processa os dados e os envia para um API.
 
-## Tecnologias e Bibliotecas Utilizadas
+## Tecnologias e Bibliotecas Utilizadas 📝
 - **Python** (3.12.2)
 - **Selenium:** biblioteca para automação de tarefas em navegadores.
 - **Pandas:** biblioteca para manipulação e análise de dados.
 - **Requests**: biblioteca para fazer requisições HTTP.
-- **Tkinter**: biblioteca para criar interfaces com Python.
+- **Custom Tkinter**: biblioteca para criar interfaces com Python.
 
 Outras bibliotecas que foram utilizadas encontram-se no arquivo `requirements.txt`.
 
-## Outras Funcionalidades
+## Outras Funcionalidades ➕
 ### Logging
 A biblioteca built-in `logging` do Python foi utilizada para fornecer algumas informações do status da execução do programa.
-### Configurações
-Para conseguir configurar a aplicação dinâmicamente, algumas variáveis foram adicionadas ao arquivo de configuração `config.ini`. Caso alguma alteração dentro desse arquivo seja feita durante a execução do programa, ele deve ser reiniciado.
 
-## Screenshots
+## Arquitetura 🏗
+O sistema foi desenvolvido tentando seguir boas práticas de programação e arquitetura limpa. A maneira final como as classes do sistemas estão organizadas e estão relacionadas é a seguinte:
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/4a15ab22-e56f-4b3f-ac28-f52adb104687"/>
+</div>
+
+## Desafios 🥊
+### Importação Circular
+Durante o desenvolvimento das interfaces do projeto, foi necessário lidar com *importações circulares*. A interface `WindowControllerI` e a classe `BaseView` se importavam de maneira paradoxal. Para solucionar isso utilizei o `TYPE_CHECKING` da biblioteca `typing` como condição para fazer as importações. Dessa maneira, somente durante a checagem de tipos é que ambas bibliotecas seriam importadas, evitando, assim, problemas durante a execução do código. As soluções podem ser verificadas dentro dos arquivos `window_controller_i.py` e `base_view.py`.
+
+## Screenshots 📷
 ### Janela Principal
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/aa6015d2-5236-4614-a9a9-f036901bc6a3"/>
+  <img src="https://github.com/user-attachments/assets/cc873038-afeb-4a02-a151-e918750b4242"/>
 </div>
 
 ### Janela Configurações
@@ -30,7 +39,7 @@ Para conseguir configurar a aplicação dinâmicamente, algumas variáveis foram
 
 ### Janela Logs
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/eca1cbd6-35ac-4810-b5b1-84e2dceccb61"/>
+  <img src="https://github.com/user-attachments/assets/807617f5-4219-4fdd-9c27-c4b7225a3a72"/>
 </div>
 
 ## Como rodar o projeto?
