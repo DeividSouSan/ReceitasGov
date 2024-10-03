@@ -3,13 +3,11 @@ import logging
 import os
 
 import requests
+from services.api.api_post_i import APIPostI
 
 
-class APIHandler:
-    def __init__(self, url: str):
-        self.url = url
-
-    def post_data(self) -> None:
+class APIHandler(APIPostI):
+    def post_data(self, url: str) -> None:
         with open(
             os.path.join(os.getcwd(), "source/logs/output/output.json"),
             "r",
@@ -17,5 +15,5 @@ class APIHandler:
         ) as file:
             data_json = json.loads(file.read())
 
-        response = requests.post(self.url, json=data_json)
+        response = requests.post(url, json=data_json)
         logging.info(f"Status da Requisição: {response.status_code}")
