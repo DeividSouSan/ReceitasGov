@@ -5,18 +5,25 @@ from datetime import datetime
 from typing import Type
 
 import customtkinter as ctk
-from gui.frames.main_page import BasePage
+from controllers.window_controller_i import WindowControllerI
+from views.base_view import BaseView
 
 
-class Window(ctk.CTk):
+class Window(ctk.CTk, WindowControllerI):
     def __init__(self):
+        ctk.CTk.__init__(self)
+
+        self.views: dict[str, BaseView] = dict()
+
+        self.create_window()
+
+    def create_window(self):
         logging.info(
             f"Iniciando o programa: {datetime.now().strftime('%d/%m/%Y, %H:%M:%S')}..."
         )
 
         # Define a aparência da janela e o tema padrão
         self.switch_theme("dark")
-        ctk.CTk.__init__(self)
 
         # Configura a janela principal
         self.wm_title("Receitas Públicas - Portal da Transparência")
@@ -25,7 +32,9 @@ class Window(ctk.CTk):
         self.iconphoto(
             False,
             tk.PhotoImage(
-                file=os.path.join(os.getcwd(), "source", "gui", "icon", "billing.png")
+                file=os.path.join(
+                    os.getcwd(), "source", "static", "icon", "billing.png"
+                )
             ),
         )
 
@@ -45,35 +54,28 @@ class Window(ctk.CTk):
             theme (str): "light" ou "dark"
         """
         if theme == "light":
-            path = os.path.join(
-                os.getcwd(), "source", "gui", "themes", "light_theme.json"
-            )
+            path = os.path.join(os.getcwd(), "source", "themes", "light_theme.json")
             ctk.set_default_color_theme(path)
         elif theme == "dark":
-            path = os.path.join(
-                os.getcwd(), "source", "gui", "themes", "dark_theme.json"
-            )
+            path = os.path.join(os.getcwd(), "source", "themes", "dark_theme.json")
             ctk.set_default_color_theme(path)
 
         logging.info(f"Tema alterado para {theme}.")
 
-    def load_pages(self, pages: list[Type[BasePage]]) -> None:
-        self.pages: dict[Type[BasePage], BasePage] = dict()
+    def set_views(self, views: list[Type[BaseView]]) -> None:
+        view_class: Type[BaseView]
 
-        page_class: Type[BasePage]
+        for view_class in views:
+            view_object: BaseView = view_class(parent=self.container, controller=self)
+            self.views[view_class.__name__] = view_object
+            view_object.grid(row=0, column=0, sticky="nsew")
 
-        for page_class in pages:
-            page_object: BasePage = page_class(parent=self.container, controller=self)
-            self.pages[page_class.__name__] = page_object
-            page_object.grid(row=0, column=0, sticky="nsew")
+        main_view = next(iter(self.views.keys()))
+        self.get_view(main_view)
 
-        print(self.pages)
-        main_page = next(iter(self.pages.keys()))
-        self.show_page(main_page)
+    def get_view(self, view_name: str) -> None:
+        selected_view: BaseView = self.views[view_name]
+        view_name = str(selected_view).replace("frame", "").replace(".!", "")
+        selected_view.tkraise()
 
-    def show_page(self, page_name: str) -> None:
-        selected_page: BasePage = self.pages[page_name]
-        page_name = str(selected_page).replace("frame", "").replace(".!", "")
-        selected_page.tkraise()
-
-        logging.info(f"Frame {page_name} carregado.")
+        logging.info(f"Frame {view_name} carregado.")
