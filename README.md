@@ -34,7 +34,7 @@ Durante o desenvolvimento das interfaces do projeto, foi necessário lidar com *
 
 ### Janela Configurações
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/d6129e5a-1a64-4442-bfbf-74b6591b1f43"/>
+  <img src="https://github.com/user-attachments/assets/f1aaacaa-0282-4d06-b616-c4d23bf944c9"/>
 </div>
 
 ### Janela Logs
