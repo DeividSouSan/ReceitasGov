@@ -21,7 +21,7 @@ class ReadFilePage(BaseView):
             self.load_file()
 
     def _create_widgets(self):
-
+        #! o path aparece em todas as páginas
         current_dir = os.getcwd()
         self._path = os.path.join(current_dir, "source")
 

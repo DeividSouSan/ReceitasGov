@@ -9,6 +9,7 @@ from services.automation_i import AutomationI
 from utils.get_page_status import get_page_status
 from views.base_view import BaseView
 
+#! o path aparece em todas as páginas
 current_dir = os.getcwd()
 path = os.path.join(current_dir, "source")
 
