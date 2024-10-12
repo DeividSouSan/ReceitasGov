@@ -49,13 +49,13 @@ Durante o desenvolvimento das interfaces do projeto, foi necessário lidar com *
 Primeiro clone o repositório. Isso pode ser feito baixando-o ou utilizando o comando:
 
 ```bash
-git clone git@github.com:DeividSouSan/BotAutomacaoReceitas.git
+git clone git@github.com:DeividSouSan/ReceitasGov.git
 ```
 
 Utilizando sua IDE ou Editor de Texto, abra o projeto. Se estiver pelo terminal acesse a pasta onde baixou ou clonou o projeto e digite:
 
 ```bash
-cd BotAutomacaoReceitas
+cd ReceitasGov
 ```
 
 ### Ambiente Virtual
@@ -107,7 +107,7 @@ pip install -r requirements.txt
 Assim, todas as dependencias que estão dentro do arquivo `requirements.txt` serão baixadas para o ambiente virtual.
 
 ### Rodando
-Para rodar a aplicação entre no diretório do repositório (`BotAutomacaoReceitas`) e digite no terminal:
+Para rodar a aplicação entre no diretório do repositório (`ReceitasGov`) e digite no terminal:
 
 ```bash
 python3 source/main.py
