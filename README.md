@@ -1,6 +1,6 @@
 # ReceitasGov 🧾
 
-O *BotAutomacaoReceitas* é um software de automação que captura receitas do governo, processa os dados e os envia para um API.
+O *ReceitasGov* é um software de automação que captura receitas do governo, processa os dados e os envia para um API.
 
 ## Tecnologias e Bibliotecas Utilizadas 📝
 - **Python** (3.12.2)
