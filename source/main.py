@@ -8,9 +8,9 @@ from services.api.api_post_i import APIPostI
 from services.automation_service import AutomationService
 from services.bots.get_public_revenue_bot import GetPublicRevenueBot
 from services.data.handle_data import HandleData
-from views.config_view import ConfigPage
-from views.main_view import MainPage
-from views.open_files_view import ReadFilePage
+from views.config_view import ConfigView
+from views.main_view import MainView
+from views.open_files_view import ReadFileView
 
 # Configurando o Log
 log_path = os.path.join(os.getcwd(), "source/files/logs")
@@ -26,6 +26,6 @@ automation = AutomationService(GetPublicRevenueBot, HandleData, APIHandler)
 
 # Iniciando a janela principal
 root = Window()
-root.set_views(views=[MainPage, ConfigPage, ReadFilePage])
-root.views["MainPage"].automation = automation
+root.set_views(views=(MainView, ConfigView, ReadFileView))
+root.views["MainView"].automation = automation
 root.mainloop()
