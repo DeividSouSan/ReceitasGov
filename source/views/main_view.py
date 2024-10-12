@@ -9,15 +9,13 @@ from services.automation_i import AutomationI
 from utils.get_page_status import get_page_status
 from views.base_view import BaseView
 
-current_dir = os.getcwd()
-path = os.path.join(current_dir, "source")
 
-
-class MainPage(BaseView):
+class MainView(BaseView):
     def __init__(self, parent: ctk.CTkFrame, controller: WindowControllerI):
+        super().__init__(parent, controller)
+
         self.automation: AutomationI = None
 
-        BaseView.__init__(self, parent, controller)
         self._create_widgets()
 
     def _create_widgets(self):
@@ -30,7 +28,9 @@ class MainPage(BaseView):
         )
 
         gear_img = ctk.CTkImage(
-            light_image=Image.open(os.path.join(path, "static", "img", "gear.png")),
+            light_image=Image.open(
+                os.path.join(self.path, "static", "img", "gear.png")
+            ),
             size=(30, 30),
         )
 
@@ -47,7 +47,9 @@ class MainPage(BaseView):
 
         graph_img = ctk.CTkImage(
             light_image=None,
-            dark_image=Image.open(os.path.join(path, "static", "img", "graph.png")),
+            dark_image=Image.open(
+                os.path.join(self.path, "static", "img", "graph.png")
+            ),
             size=(250, 250),
         )
 
@@ -100,15 +102,15 @@ class MainPage(BaseView):
             title="Sucesso",
             text="Dados enviados para API com sucesso, o arquivo com a saída enviada também foi gerado e pode ser acessado no diretório 'output'.",
             font=("Arial", 12),
-            image_path=os.path.join(path, "static", "img", "success.png"),
+            image_path=os.path.join(self.path, "static", "img", "success.png"),
             image_size=(50, 50),
         )
 
     def _configuration(self):
-        self.controller.get_view("ConfigPage")
+        self.controller.get_view("ConfigView")
 
     def _files(self):
-        self.controller.get_view("ReadFilePage")
+        self.controller.get_view("OpenFileView")
 
     def _exit(self):
         logging.info(

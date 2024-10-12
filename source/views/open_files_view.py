@@ -9,7 +9,7 @@ from PIL import Image
 from views.base_view import BaseView
 
 
-class ReadFilePage(BaseView):
+class OpenFileView(BaseView):
     file_path = None
 
     def __init__(self, parent: ctk.CTkFrame, controller: WindowControllerI):
@@ -21,10 +21,6 @@ class ReadFilePage(BaseView):
             self.load_file()
 
     def _create_widgets(self):
-
-        current_dir = os.getcwd()
-        self._path = os.path.join(current_dir, "source")
-
         self.grid_columnconfigure((0, 1, 2, 3), weight=1)
         self.grid_rowconfigure((0, 1, 2, 3, 4), weight=1)
 
@@ -36,7 +32,7 @@ class ReadFilePage(BaseView):
 
         update_img = ctk.CTkImage(
             light_image=Image.open(
-                os.path.join(self._path, "static", "img", "update.png")
+                os.path.join(self.path, "static", "img", "update.png")
             ),
             size=(30, 30),
         )
@@ -89,16 +85,16 @@ class ReadFilePage(BaseView):
 
     def _open_file(self):
         # Abrir diálogo para selecionar o arquivo
-        initial_dir = os.path.join(os.getcwd(), "source/files")
+        initial_dir = os.path.join(self.path, "source/files")
         file_path = filedialog.askopenfilename(
             title="Selecione um arquivo:",
             initialdir=initial_dir,
-            filetypes=[
+            filetypes=(
                 ("Todos os arquivos", "*.*"),
                 ("Arquivos de Log", "*.log"),
                 ("Arquivos JSON", "*.json"),
                 ("Arquivos CSV", "*.csv"),
-            ],
+            ),
         )
 
         if not file_path:
@@ -125,7 +121,7 @@ class ReadFilePage(BaseView):
                 title="SUCCESS",
                 text="Arquivo carregado com sucesso.",
                 font=("Arial", 16),
-                image_path=os.path.join(self._path, "static", "img", "success.png"),
+                image_path=os.path.join(self.path, "static", "img", "success.png"),
                 image_size=(50, 50),
             )
 
@@ -134,7 +130,7 @@ class ReadFilePage(BaseView):
                 title="ERROR",
                 text="Selecione um arquivo primeiro!",
                 font=("Arial", 16),
-                image_path=os.path.join(self._path, "static", "img", "error.png"),
+                image_path=os.path.join(self.path, "static", "img", "error.png"),
                 image_size=(50, 50),
             )
 
@@ -142,4 +138,4 @@ class ReadFilePage(BaseView):
         self._load_file()
 
     def _back(self):
-        self.controller.get_view("MainPage")
+        self.controller.get_view("MainView")

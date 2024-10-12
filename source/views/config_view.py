@@ -3,7 +3,7 @@ from controllers.window_controller_i import WindowControllerI
 from views.base_view import BaseView
 
 
-class ConfigPage(BaseView):
+class ConfigView(BaseView):
     def __init__(self, parent: ctk.CTkFrame, controller: WindowControllerI):
         BaseView.__init__(self, parent, controller)
         self.after(10, self._create_widgets)
@@ -29,4 +29,4 @@ class ConfigPage(BaseView):
         pass
 
     def _back(self):
-        self.controller.get_view("MainPage")
+        self.controller.get_view("MainView")
