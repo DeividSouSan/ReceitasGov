@@ -70,8 +70,7 @@ class Window(ctk.CTk, WindowControllerI):
             self.views[view_class.__name__] = view_object
             view_object.grid(row=0, column=0, sticky="nsew")
 
-        main_view = next(iter(self.views.keys()))
-        self.get_view(main_view)
+        self.get_view("MainView")
 
     def get_view(self, view_name: str) -> None:
         selected_view: BaseView = self.views[view_name]

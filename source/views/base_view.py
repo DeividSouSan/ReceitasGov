@@ -1,3 +1,4 @@
+import os
 from typing import TYPE_CHECKING
 
 import customtkinter as ctk
@@ -11,6 +12,8 @@ class BaseView(ctk.CTkFrame):
         self._create_view(parent)
 
         self.controller = controller
+
+        self.path = os.path.join(os.getcwd(), "source")
 
     def _create_view(self, parent: ctk.CTkFrame):
         ctk.CTkFrame.__init__(self, parent)
