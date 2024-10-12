@@ -12,8 +12,15 @@ from views.main_view import MainView
 from views.open_files_view import OpenFileView
 
 # Configurando o Log
+if not os.path.exists(os.path.join(os.getcwd(), "source/files")):
+    os.mkdir(os.path.join(os.getcwd(), "source/files"))
+    os.mkdir(os.path.join(os.getcwd(), "source/files/logs"))
+    os.mkdir(os.path.join(os.getcwd(), "source/files/download"))
+    os.mkdir(os.path.join(os.getcwd(), "source/files/output"))
+
 log_path = os.path.join(os.getcwd(), "source/files/logs")
 log_name = f"app_usage_{datetime.now().strftime('%d%m%Y_%H_%M_%S')}.log"
+
 try:
     logging.basicConfig(filename=f"{log_path}/{log_name}", level=logging.INFO)
 except FileNotFoundError:
