@@ -1,3 +1,4 @@
+import configparser
 import logging
 import os
 from time import sleep
@@ -12,8 +13,11 @@ class GetPublicRevenueBot(DownloadBot):
     """
 
     def __init__(self):
+        self.config = configparser.ConfigParser()
+        self.config.read(os.path.join(os.getcwd(), "source/config.ini"))
+
         web_url = "https://portaldatransparencia.gov.br/"
-        max_time = 2
+        max_time = int(self.config["DOWNLOAD"]["WAIT_TIME"])
 
         super().__init__(web_url, max_time)
 

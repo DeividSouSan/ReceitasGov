@@ -1,3 +1,4 @@
+import configparser
 import logging
 import os
 from abc import ABC, abstractmethod
@@ -7,6 +8,9 @@ from selenium.webdriver import Chrome, ChromeOptions
 
 class DownloadBot(ABC):
     def __init__(self, web_url: str, max_time: int):
+        self.config = configparser.ConfigParser()
+        self.config.read(os.path.join(os.getcwd(), "source/config.ini"))
+
         self.url = web_url
         self.donwload_folder = os.path.join(os.getcwd(), "source/files/download")
 
@@ -18,8 +22,11 @@ class DownloadBot(ABC):
         self.time_spent = 0
 
         chrome_options = ChromeOptions()
-        prefs = {"download.default_directory": self.donwload_folder}
-        chrome_options.add_experimental_option("prefs", prefs)
+
+        if self.config["DOWNLOAD"].getboolean("DEVICE_DOWNLOAD_FOLDER") is False:
+            prefs = {"download.default_directory": self.donwload_folder}
+            chrome_options.add_experimental_option("prefs", prefs)
+
         chrome_options.add_argument("--start-maximized")
 
         self.driver = Chrome(options=chrome_options)

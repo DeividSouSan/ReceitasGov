@@ -1,3 +1,6 @@
+import configparser
+import os
+
 from services.api.api_post_i import APIPostI
 from services.automation_i import AutomationI
 from services.bots.download_bot import DownloadBot
@@ -13,10 +16,13 @@ class AutomationService(AutomationI):
         self.api_handler = post_api
 
     def start(self):
+        self.config = configparser.ConfigParser()
+        self.config.read(os.path.join(os.getcwd(), "source", "config.ini"))
+
         bot = self.download_bot()
         bot.start()
 
-        data_handler = self.data_process(author="Deivid Souza Santana")
+        data_handler = self.data_process(author=self.config["OUTPUT"]["AUTHOR"])
         data = data_handler.process_data()
         data_handler.make_output_files(data)
 
