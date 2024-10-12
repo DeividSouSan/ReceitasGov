@@ -4,7 +4,6 @@ from datetime import datetime
 
 from controllers.window import Window
 from services.api.api_handler import APIHandler
-from services.api.api_post_i import APIPostI
 from services.automation_service import AutomationService
 from services.bots.get_public_revenue_bot import GetPublicRevenueBot
 from services.data.handle_data import HandleData
