@@ -85,7 +85,7 @@ class OpenFileView(BaseView):
 
     def _open_file(self):
         # Abrir diálogo para selecionar o arquivo
-        initial_dir = os.path.join(self.path, "source/files")
+        initial_dir = os.path.join(self.path, "files")
         file_path = filedialog.askopenfilename(
             title="Selecione um arquivo:",
             initialdir=initial_dir,

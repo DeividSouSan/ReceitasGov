@@ -9,7 +9,7 @@ from services.api.api_post_i import APIPostI
 class APIHandler(APIPostI):
     def post_data(self, url: str) -> None:
         with open(
-            os.path.join(os.getcwd(), "source/logs/output/output.json"),
+            os.path.join(os.getcwd(), "source", "files", "output", "output.json"),
             "r",
             encoding="utf-8",
         ) as file:
